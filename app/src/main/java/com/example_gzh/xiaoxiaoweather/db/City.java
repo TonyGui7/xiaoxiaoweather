@@ -10,7 +10,7 @@ public class City extends DataSupport {
 
 
 
-    private int cityId;
+    private int id;
 
     private String cityName;
 
@@ -31,7 +31,7 @@ public class City extends DataSupport {
      * @param id
      * */
     public void setCityId(int id){
-        this.cityId=id;
+        this.id=id;
     }
 
 
@@ -40,7 +40,7 @@ public class City extends DataSupport {
      * @return cityId 当前城市的id
      * */
     public int getCityId(){
-        return cityId;
+        return id;
     }
 
 
