@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+
+    <TextView
+        android:id="@+id/added_city_name"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:text="he"
+        android:textSize="50sp"
+        android:textColor="@color/colorPrimary"/>
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+
+        <TextView android:id="@+id/now_Temp_textView"
+                  android:layout_height="wrap_content"
+                  android:layout_width="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:layout_marginRight="10dp"
+                  android:layout_centerVertical="true"
+                  android:gravity="center_vertical"
+                  android:text="25C"
+                  android:textSize="50sp"
+                  android:textColor="@color/colorPrimary"/>
+
+        <TextView android:id="@+id/now_weather_Info_textView"
+                  android:layout_height="wrap_content"
+                  android:layout_width="wrap_content"
+
+                  android:layout_marginLeft="50dp"
+                  android:layout_centerVertical="true"
+                  android:gravity="center_vertical"
+                  android:text="多云"
+                  android:textSize="20sp"
+                  android:textColor="@color/colorPrimary"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+</RelativeLayout>

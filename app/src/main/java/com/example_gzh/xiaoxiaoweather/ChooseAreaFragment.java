@@ -110,20 +110,34 @@ public class ChooseAreaFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent,View v,int position,
                                     long id){
 
-                if (currentLevel==LEVEL_PROVINCE){
-                    selectedProvince=provinceList.get(position);
-                    queryCities();
-                }else if (currentLevel==LEVEL_CITY){
-                    selectedCity=cityList.get(position);
-                    queryCounties();
-                }else if (currentLevel==LEVEL_COUNTY){
-                    String weatherId=countyList.get(position).getWeatherId();
-                    Intent intent=new Intent(getActivity(),WeatherActivity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
-                }
+                if (HttpUtil.isNetworkConnected(getActivity())) {
+                    if (currentLevel == LEVEL_PROVINCE) {
+                        selectedProvince = provinceList.get(position);
+                        queryCities();
+                    } else if (currentLevel == LEVEL_CITY) {
+                        selectedCity = cityList.get(position);
+                        queryCounties();
+                    } else if (currentLevel == LEVEL_COUNTY) {
+                        String weatherId = countyList.get(position).getWeatherId();
+                        if (getActivity() instanceof MainActivity) { //刚启动程序
+                            Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                            intent.putExtra("weather_id", weatherId);
+                            startActivity(intent);
+                            getActivity().finish();
+                        } else if (getActivity() instanceof WeatherActivity) {//以获取天气信息，现在切换城市
+                            WeatherActivity activity = (WeatherActivity) getActivity();
+                            activity.drawerLayout.closeDrawers();
+                            activity.swipeRefresh.setRefreshing(true);
+                            activity.requestWeather(weatherId);
 
+                        }
+
+
+                    }
+                }
+                else {
+                    Toast.makeText(getActivity(),"无网络连接",Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -171,14 +185,18 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel=LEVEL_PROVINCE;
         }else {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    String address="http://guolin.tech/api/china";
-                    queryFromServer(address,"province");
-                }
-            }).start();
-
+            if (HttpUtil.isNetworkConnected(getActivity())) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String address = "http://guolin.tech/api/china";
+                        queryFromServer(address, "province");
+                    }
+                }).start();
+            }
+            else {
+                Toast.makeText(getActivity(),"无网络连接",Toast.LENGTH_SHORT).show();
+            }
         }
 
 
@@ -209,15 +227,19 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel=LEVEL_CITY;
         }else{
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int provinceCode=selectedProvince.getProvinceCode();
-                    String address="http://guolin.tech/api/china/"+provinceCode;
-                    queryFromServer(address,"city");
-                }
-            }).start();
-
+            if (HttpUtil.isNetworkConnected(getActivity())) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int provinceCode = selectedProvince.getProvinceCode();
+                        String address = "http://guolin.tech/api/china/" + provinceCode;
+                        queryFromServer(address, "city");
+                    }
+                }).start();
+            }
+            else {
+                Toast.makeText(getActivity(),"无网络连接",Toast.LENGTH_SHORT).show();
+            }
 
         }
 
@@ -242,15 +264,21 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel=LEVEL_COUNTY;
         }else{
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int provinceCode=selectedProvince.getProvinceCode();
-                    int cityCode=selectedCity.getCityCode();
-                    String address="http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
-                    queryFromServer(address,"county");
-                }
-            }).start();
+
+            if (HttpUtil.isNetworkConnected(getActivity())) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int provinceCode = selectedProvince.getProvinceCode();
+                        int cityCode = selectedCity.getCityCode();
+                        String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
+                        queryFromServer(address, "county");
+                    }
+                }).start();
+            }
+            else {
+                Toast.makeText(getActivity(),"无网络连接",Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
@@ -297,7 +325,7 @@ public class ChooseAreaFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getActivity(), "GET_RESULT", Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(getActivity(), "GET_RESULT", Toast.LENGTH_SHORT).show();
                         closeProgressDialog();
                         if ("province".equals(type)) {
                             queryProvinces();
