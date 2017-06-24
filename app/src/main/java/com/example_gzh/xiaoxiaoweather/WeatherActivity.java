@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -12,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,12 +24,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example_gzh.xiaoxiaoweather.component_obj.City_item;
+import com.example_gzh.xiaoxiaoweather.component_obj.addedCitesListLab;
 import com.example_gzh.xiaoxiaoweather.gson.Forecast;
 import com.example_gzh.xiaoxiaoweather.gson.Weather;
 import com.example_gzh.xiaoxiaoweather.service.AutoUpdateService;
@@ -37,12 +41,14 @@ import com.example_gzh.xiaoxiaoweather.util.Utility;
 import org.w3c.dom.Text;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends ActionBarActivity {
 
 
 
@@ -85,6 +91,7 @@ public class WeatherActivity extends AppCompatActivity {
     private LinearLayout settingLayout;
 
 
+    public static ProgressBar switchCityProgressBar;
 
     private  static final String WEATHERID_STORE_KEY="weather";
 
@@ -103,6 +110,14 @@ public class WeatherActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_weather);
+
+
+
+
+
+
+
+
 
         /**初始化各组件*/
         weatherLayout=(ScrollView) findViewById(R.id.weather_layout);
@@ -205,12 +220,15 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 drawerLayout.openDrawer(settingLayout);
-
+                 SettingFragment.adapter.notifyDataSetChanged();
             }
         });
 
 
 
+
+
+        switchCityProgressBar=(ProgressBar) findViewById(R.id.switch_city_ProgressBar);
 
 
     }
@@ -280,9 +298,18 @@ public class WeatherActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 try {
                     OkHttpClient client = new OkHttpClient();
+                    //Request request = new Request.Builder()
+                      //      .url("https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
+                      //      .build();
+
+
                     Request request = new Request.Builder()
-                            .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
-                            .build();
+                            .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
+                            .build();   //能够获取未来一周的天气信息
+
+                  //  Request request = new Request.Builder()
+                     //       .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
+                    //        .build();  //用自己申请的Key只能获取未来三天的天气信息
 
                     // http://10.0.2.2/getdata.json
                     Response response = client.newCall(request).execute();
@@ -314,27 +341,49 @@ public class WeatherActivity extends AppCompatActivity {
                                 mWeatherId=weather.basic.weatherId;
                                 editor.putString("weather",responseData);
                                 editor.apply();
-
-                                /**保存一份到添加城市列表中*/
-                                if (SettingFragment.addCityClick){
-                                    City_item item=new City_item();
-                                    item.setCityName(weather.basic.cityName);
-                                    item.setCurrentTemperature(weather.now.temperature);
-                                    item.setWeatherInfo(weather.now.more.info);
-
-                                    SettingFragment.cityItemList.add(item);
-                                    SettingFragment.adapter.notifyDataSetChanged();
+                                showWeatherInfo(weather);
+                                String cityName=weather.basic.cityName;
 
 
+                                if (addedCitesListLab.get(WeatherActivity.this).hasItem(cityName)){//对添加城市列表中的天气数据更新
 
-                                    SettingFragment.addCityClick=false;
-                                    editor.putString(SettingFragment.ADDED_CITY_INFO_PREF+item.getCityName(),responseData);
-                                     editor.apply();
+                                   String weather_upate=responseData;
+                                   String weatherInfo_update=weather.now.more.info;
+                                   String temp_update=weather.now.temperature;
+
+                                    addedCitesListLab.get(WeatherActivity.this).updateItemInfo(cityName,weather_upate,weatherInfo_update,temp_update);
+
                                 }
 
 
 
-                                showWeatherInfo(weather);
+                                /**保存一份到添加城市列表中*/
+                                if (SettingFragment.addCityClick){
+
+
+                                    if (addedCitesListLab.get(WeatherActivity.this).hasItem(cityName)){
+
+                                        Toast.makeText(WeatherActivity.this,cityName+"已添加",Toast.LENGTH_SHORT).show();
+                                    }else {
+
+                                        City_item item = new City_item();
+                                        item.setCityName(weather.basic.cityName);
+                                        item.setCurrentTemperature(weather.now.temperature);
+                                        item.setWeatherInfo(weather.now.more.info);
+                                        item.setAddedCityWeather(responseData);
+
+                                        addedCitesListLab.get(WeatherActivity.this).addCityItem(item);
+
+                                        addedCitesListLab.get(WeatherActivity.this).saveCityLists();
+                                        SettingFragment.addCityClick = false;
+                                    }
+
+                                }
+
+
+
+
+
                             }else {
                                 Toast.makeText(WeatherActivity.this,"获取天气失败Noexception",Toast.LENGTH_SHORT).show();
 
@@ -398,12 +447,21 @@ public class WeatherActivity extends AppCompatActivity {
 
             TextView dateText=(TextView) v.findViewById(R.id.date_text);
 
+            Button infoLogoButton=(Button) v.findViewById(R.id.weatherLogoButton);
+
             TextView infoText=(TextView) v.findViewById(R.id.info_text);
 
             TextView maxText=(TextView) v.findViewById(R.id.max_text);
 
             TextView minText=(TextView) v.findViewById(R.id.min_text);
 
+            String infoCode=forecast.more.infoCode;
+
+            String weatherLogoName="weather_logo"+infoCode;
+           // String weatherLogoName="test";
+            int logoId=getResources().getIdentifier(weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+            infoLogoButton.setBackgroundResource(logoId);
             dateText.setText(forecast.date);
             infoText.setText(forecast.more.info);
             maxText.setText(forecast.temperature.max);
@@ -488,6 +546,12 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
 
+
+
+
+    public void setWeatherId(String weatherId){
+        mWeatherId=weatherId;
+    }
 
 
 

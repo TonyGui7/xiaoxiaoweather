@@ -4,6 +4,9 @@ package com.example_gzh.xiaoxiaoweather.component_obj;
  * Created by Tony Gui on 2017/6/20.
  */
 
+
+import com.example_gzh.xiaoxiaoweather.gson.Weather;
+
 public class City_item {
 
     /**
@@ -21,6 +24,9 @@ public class City_item {
 
     /**当前的天气状态*/
     private String weatherInfo;
+
+
+    private String addedCityWeatherresponse;
 
 
     public String getCityName() {
@@ -53,5 +59,17 @@ public class City_item {
 
 
 
+
+    public void setAddedCityWeather(String weather){
+        addedCityWeatherresponse=weather;
+    }
+
+
+
+
+    public String getAddedCityWeather(){
+
+        return addedCityWeatherresponse;
+    }
 
 }

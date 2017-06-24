@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="100dp"
+    android:background="@drawable/background_activated">
 
 
     <TextView
@@ -13,7 +14,7 @@
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:text="he"
-        android:textSize="50sp"
+        android:textSize="25sp"
         android:textColor="@color/colorPrimary"/>
 
     <LinearLayout
@@ -33,8 +34,8 @@
                   android:layout_marginRight="10dp"
                   android:layout_centerVertical="true"
                   android:gravity="center_vertical"
-                  android:text="25C"
-                  android:textSize="50sp"
+
+                  android:textSize="30sp"
                   android:textColor="@color/colorPrimary"/>
 
         <TextView android:id="@+id/now_weather_Info_textView"
@@ -44,8 +45,8 @@
                   android:layout_marginLeft="50dp"
                   android:layout_centerVertical="true"
                   android:gravity="center_vertical"
-                  android:text="多云"
-                  android:textSize="20sp"
+
+                  android:textSize="15sp"
                   android:textColor="@color/colorPrimary"/>
 
 

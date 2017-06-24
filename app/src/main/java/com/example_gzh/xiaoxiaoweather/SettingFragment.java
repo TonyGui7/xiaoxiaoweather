@@ -2,13 +2,20 @@ package com.example_gzh.xiaoxiaoweather;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.view.ActionMode;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example_gzh.xiaoxiaoweather.component_obj.City_item;
+import com.example_gzh.xiaoxiaoweather.component_obj.addedCitesListLab;
 import com.example_gzh.xiaoxiaoweather.db.City;
 import com.example_gzh.xiaoxiaoweather.db.County;
 import com.example_gzh.xiaoxiaoweather.gson.Weather;
@@ -40,10 +48,13 @@ public class SettingFragment extends Fragment {
 
     private Button addCityButton;
 
+    private Button manageCitybackButton;
 
 
 
     public static final String ADDED_CITY_INFO_PREF="addedCityInfo";
+
+    public static final String ADDED_CITY_LIST_SIZE="addedCityCount";
 
     /**被添加的城市天气列表子控件*/
     private TextView addedCity;
@@ -54,12 +65,13 @@ public class SettingFragment extends Fragment {
 
 
 
-    public static List<City_item> cityItemList=new ArrayList<>() ;
+    private  List<City_item> cityItemList;
 
     public static   CityAdapter adapter;
 
     /**标记是否点击添加城市按钮*/
     public static boolean addCityClick=false;
+
 
 
     private WeatherActivity activity;
@@ -70,8 +82,8 @@ public class SettingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        adapter=new CityAdapter(getActivity(),R.layout.city_item,cityItemList);
 
+        cityItemList=addedCitesListLab.get(getActivity()).getCityLists();
 
 
 
@@ -81,12 +93,15 @@ public class SettingFragment extends Fragment {
 
 
 
+
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup parent,
                              Bundle savedInstanceState){
 
 
         View v=inflater.inflate(R.layout.setting_fragment,parent,false);
+
 
 
 
@@ -97,7 +112,7 @@ public class SettingFragment extends Fragment {
         addCityButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-              addCityClick=true;
+                addCityClick=true;
                 WeatherActivity.drawerLayout.closeDrawers();
                 WeatherActivity.drawerLayout.openDrawer(GravityCompat.START);
             }
@@ -107,7 +122,70 @@ public class SettingFragment extends Fragment {
 
 
 
+
+
+
+        adapter=new CityAdapter(getActivity(),R.layout.city_item,cityItemList);
+
+
+
         addCityListView=(ListView) v.findViewById(R.id.add_city_listView);
+
+        if (Build.VERSION.SDK_INT<Build.VERSION_CODES.HONEYCOMB) {
+            registerForContextMenu(addCityListView);
+        }else {
+            addCityListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            addCityListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+                @Override
+                public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
+                }
+
+                @Override
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    MenuInflater inflater1=mode.getMenuInflater();
+                    inflater1.inflate(R.menu.added_city_list_item_context,menu);
+
+                    return true;
+                }
+
+                @Override
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    switch (item.getItemId()){
+
+                        case R.id.menu_item_delete_city:
+                            addedCitesListLab lab=addedCitesListLab.get(getActivity());
+                            for (int iloop=adapter.getCount()-1;iloop>=0;iloop--){
+                                if (addCityListView.isItemChecked(iloop)){
+                                    lab.deleteItem(adapter.getItem(iloop));
+                                }
+                            }
+
+                            mode.finish();
+                            adapter.notifyDataSetChanged();
+                            lab.saveCityLists();
+                            return true;
+                        default:
+                            return false;
+                    }
+
+
+
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode) {
+
+                }
+            });
+
+
+        }
 
         adapter.notifyDataSetChanged();
 
@@ -118,17 +196,22 @@ public class SettingFragment extends Fragment {
                                             long id){
 
                City_item item=cityItemList.get(position);
-               SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(getActivity());
-               String weatherString=prefs.getString(ADDED_CITY_INFO_PREF+item.getCityName()," ");
+
+               String weatherString=item.getAddedCityWeather();
+
+
+
 
                if (weatherString!=null){
                    mweather= Utility.handleWeatherResponse(weatherString);
                    WeatherActivity.drawerLayout.closeDrawers();
                    activity = (WeatherActivity) getActivity();
 
+                   activity.switchCityProgressBar.setVisibility(View.VISIBLE);
                    new Thread(new Runnable() {
                        @Override
                        public void run() {
+
                            try{
                                Thread.sleep(1000);
                            }catch (Exception e){
@@ -138,7 +221,9 @@ public class SettingFragment extends Fragment {
                            getActivity().runOnUiThread(new Runnable() {
                                @Override
                                public void run() {
+                                    activity.setWeatherId(mweather.basic.weatherId);
                                    activity.showWeatherInfo(mweather);
+                                   activity.switchCityProgressBar.setVisibility(View.GONE);
                                }
                            });
 
@@ -151,6 +236,15 @@ public class SettingFragment extends Fragment {
             }
         });
 
+
+
+        manageCitybackButton=(Button) v.findViewById(R.id.manageCity_back_Button);
+        manageCitybackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WeatherActivity.drawerLayout.closeDrawers();
+            }
+        });
 
         return v;
 
@@ -188,7 +282,7 @@ public class SettingFragment extends Fragment {
 
 
             addedCity.setText(city_item.getCityName());
-            nowTempTextView.setText(city_item.getCurrentTemperature());
+            nowTempTextView.setText(city_item.getCurrentTemperature()+"℃");
             nowWeatherInfoTextView.setText(city_item.getWeatherInfo());
 
 
@@ -208,6 +302,33 @@ public class SettingFragment extends Fragment {
 
 
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo info){
+        getActivity().getMenuInflater().inflate(R.menu.added_city_list_item_context,menu);
+    }
+
+
+
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+     int position=info.position;
+        City_item cityItem=adapter.getItem(position);
+
+
+        switch (item.getItemId()){
+            case R.id.menu_item_delete_city:
+                addedCitesListLab.get(getActivity()).deleteItem(cityItem);
+                addedCitesListLab.get(getActivity()).saveCityLists();
+                adapter.notifyDataSetChanged();
+                return true;
+        }
+
+
+        return super.onContextItemSelected(item);
+    }
 
 
 }

@@ -25,6 +25,10 @@ public class Forecast {
 
 
     public class More{
+
+        @SerializedName("code_d")
+        public String infoCode;  //天气信息info的代码
+
         @SerializedName("txt_d")
         public String info;
     }

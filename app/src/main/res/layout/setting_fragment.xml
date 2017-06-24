@@ -7,19 +7,28 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/textColorDefault">
+    android:background="#fff"
+    android:foreground="@color/cardview_shadow_start_color">
 
 
 
-
-
-
+    <android.support.v7.widget.ActionBarContainer
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-     android:background="@color/colorPrimary">
-
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+            <Button
+                android:id="@+id/manageCity_back_Button"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_back"
+                android:layout_alignParentBottom="true"/>
 
             <TextView
 
@@ -29,32 +38,101 @@
                 android:layout_centerVertical="true"
                 android:background="@color/colorPrimary"
                 android:textColor="#fff"
-                android:textSize="28sp"
-                android:text="添加城市"/>
+                android:textSize="20sp"
+                android:text="管理城市"
+                android:layout_alignParentBottom="true"/>
 
-            <Button
-                android:id="@+id/add_city_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 android:maxWidth="20sp"
-                android:maxHeight="20sp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/add_city"/>
+
 
 
         </RelativeLayout>
+
+        </android.support.v7.widget.ActionBarContainer>
+
+
+
+
+
 
 
 
     <ListView
         android:id="@+id/add_city_listView"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        />
+        android:layout_height="420dp"
+        android:layout_marginBottom="10dp"/>
 
 
 
+
+    <LinearLayout
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:foregroundGravity="center_horizontal"
+        android:background="@drawable/addcity_layout_background"
+        android:orientation="horizontal">
+
+
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+           >
+            <Button
+                android:id="@+id/add_city_Button"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+
+                android:padding="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/add_city"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="10sp"
+                android:textColor="#fff"
+                android:text="添加城市"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="100dp"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/More_Info_Button"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+
+                android:padding="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/add_city"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="10sp"
+                android:textColor="#fff"
+                android:text="关于"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
 
 

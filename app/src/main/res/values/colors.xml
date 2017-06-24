@@ -5,9 +5,13 @@
     <color name="colorAccent">#FF4081</color>
     
 
-    <color name="textColorDefault">#fff</color>
+    <color name="textColorDefault">#0000FF</color>
 
-    <color name="componentBackgroundDefault">#8000</color>
+    <color name="componentBackgroundDefault">#F0FFFF</color>
+
+    <color name="forecastTextColor">#0000FF</color>
+    <color name="forecastBackground">#fff</color>
+
 
 
 </resources>

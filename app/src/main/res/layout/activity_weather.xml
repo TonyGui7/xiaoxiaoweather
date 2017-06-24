@@ -13,9 +13,10 @@
 
     <ImageView
         android:id="@+id/bing_pic_img"
-        android:layout_width="368dp"
-        android:layout_height="551dp"
-        android:scaleType="centerCrop"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+/>
 
 
 

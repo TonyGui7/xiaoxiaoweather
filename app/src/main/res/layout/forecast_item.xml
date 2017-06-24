@@ -11,8 +11,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="2"
-        android:textColor="@color/textColorDefault"/>
+        android:textColor="@color/forecastTextColor"/>
 
+
+
+    <Button
+        android:id="@+id/weatherLogoButton"
+        android:layout_width="10dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        />
 
     <TextView
         android:id="@+id/info_text"
@@ -21,7 +31,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/textColorDefault"/>
+        android:textColor="@color/forecastTextColor"/>
 
 
     <TextView
@@ -31,7 +41,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="right"
-        android:textColor="@color/textColorDefault"/>
+        android:textColor="@color/forecastTextColor"/>
 
 
 
@@ -42,7 +52,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="right"
-        android:textColor="@color/textColorDefault"/>
+        android:textColor="@color/forecastTextColor"/>
 
 
 
