@@ -18,6 +18,9 @@ public class Now {
 
     public class More{
 
+        @SerializedName("code")
+        public String infoCode;  //天气信息info的代码
+
         @SerializedName("txt")
         public String info;
     }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+
+    <TextView
+        android:id="@+id/search_result_city_TextView"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textColor="#0000FF"/>
+
+    <TextView
+        android:id="@+id/search_result_list_TextView"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:textColor="#F0FFFF"/>
+
+
+</LinearLayout>

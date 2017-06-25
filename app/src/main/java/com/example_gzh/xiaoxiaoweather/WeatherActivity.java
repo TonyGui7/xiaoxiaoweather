@@ -90,8 +90,14 @@ public class WeatherActivity extends ActionBarActivity {
 
     private LinearLayout settingLayout;
 
+    private LinearLayout chooseAreaLayout;
+
+
+    private static Weather currentDisplayWeather;
 
     public static ProgressBar switchCityProgressBar;
+
+    public static boolean hasRequestWeather=false;
 
     private  static final String WEATHERID_STORE_KEY="weather";
 
@@ -111,9 +117,9 @@ public class WeatherActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_weather);
 
+        chooseAreaLayout=(LinearLayout) findViewById(R.id.choose_area_fragment_layout);
 
-
-
+        chooseAreaLayout.setVisibility(View.GONE);
 
 
 
@@ -152,13 +158,17 @@ public class WeatherActivity extends ActionBarActivity {
 
         if(weatherString!=null){ //天气数据已经缓存到本地，直接读取
             Weather weather= Utility.handleWeatherResponse(weatherString);
+            currentDisplayWeather=weather;
+          //  currentDisplayWeatherInfoCode=weather.now.more.infoCode;
             mWeatherId=weather.basic.weatherId;
             showWeatherInfo(weather);
         }else{  //天气数据没有缓存，需要到服务器获取数据
             mWeatherId=getIntent().getStringExtra("weather_id");
+           // mWeatherId= "CN101010200";
             weatherLayout.setVisibility(View.INVISIBLE);
             if(HttpUtil.isNetworkConnected(WeatherActivity.this)){
                 requestWeather(mWeatherId);
+                swipeRefresh.setRefreshing(false);
             }else {
                 Toast.makeText(WeatherActivity.this, "无网络连接", Toast.LENGTH_SHORT).show();
             }
@@ -174,7 +184,7 @@ public class WeatherActivity extends ActionBarActivity {
                     requestWeather(mWeatherId);
                     showToast("已获取最新天气信息");
 
-
+                    swipeRefresh.setRefreshing(false);
 
 
                 }
@@ -298,14 +308,14 @@ public class WeatherActivity extends ActionBarActivity {
                 // TODO Auto-generated method stub
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    //Request request = new Request.Builder()
-                      //      .url("https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
-                      //      .build();
-
-
                     Request request = new Request.Builder()
-                            .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
-                            .build();   //能够获取未来一周的天气信息
+                            .url("https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
+                           .build();
+
+
+                   // Request request = new Request.Builder()
+                     //       .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
+                     //       .build();   //能够获取未来一周的天气信息
 
                   //  Request request = new Request.Builder()
                      //       .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
@@ -316,7 +326,7 @@ public class WeatherActivity extends ActionBarActivity {
 
                 final  String responseData = response.body().string();
                     //  parseXMLWithPull(responseData);
-                 //   showToast(responseData);
+                    showToast(responseData);
 
                  final  Weather weather=Utility.handleWeatherResponse(responseData);
 
@@ -336,12 +346,19 @@ public class WeatherActivity extends ActionBarActivity {
                         public void run() {
 
                             if (weather!=null&&"ok".equals(weather.status)){//获取天气数据成功
+
                                 SharedPreferences.Editor editor=PreferenceManager
                                         .getDefaultSharedPreferences(WeatherActivity.this).edit();
                                 mWeatherId=weather.basic.weatherId;
                                 editor.putString("weather",responseData);
                                 editor.apply();
                                 showWeatherInfo(weather);
+
+                                /**存储当前显示天气的城市的Weather信息******/
+                              //  currentDisplayWeatherInfoCode=weather.now.more.infoCode;
+                                hasRequestWeather=true;
+                                currentDisplayWeather=weather;
+                                updateSettingFragmentBackground();
                                 String cityName=weather.basic.cityName;
 
 
@@ -389,7 +406,7 @@ public class WeatherActivity extends ActionBarActivity {
 
                             }
 
-                            swipeRefresh.setRefreshing(false);
+                          //  swipeRefresh.setRefreshing(false);
                         }
                     });
 
@@ -398,7 +415,7 @@ public class WeatherActivity extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(WeatherActivity.this,"获取天气失败exception",Toast.LENGTH_SHORT).show();
-                  swipeRefresh.setRefreshing(false);
+                 // swipeRefresh.setRefreshing(false);
                 }
 
             }
@@ -551,6 +568,127 @@ public class WeatherActivity extends ActionBarActivity {
 
     public void setWeatherId(String weatherId){
         mWeatherId=weatherId;
+    }
+
+
+
+    public Weather getCurrentDisplayWeather(){
+        return currentDisplayWeather;
+    }
+
+    public void setCurrentDisplayWeather(Weather weatherIn){
+        currentDisplayWeather=weatherIn;
+    }
+
+
+
+    /*更新SettingFragment的背景*/
+    private void updateSettingFragmentBackground(){
+
+
+        String prefix="weather_background";
+        String CurrentinfoCode;
+        if (currentDisplayWeather==null){
+            CurrentinfoCode="";
+        }else{
+            CurrentinfoCode =currentDisplayWeather.now.more.infoCode;
+        }
+
+        // String CurrentinfoCode=WeatherActivity.currentDisplayWeatherInfoCode;
+
+        int imageId;
+
+        if (CurrentinfoCode.compareTo("100")==0){//天气晴朗
+
+            String suffix="100";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+        }else if (CurrentinfoCode.compareTo("101")>=0
+                &&CurrentinfoCode.compareTo("103")<=0){//天气多云
+
+            String suffix="101_103";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+        }
+        else if (CurrentinfoCode.compareTo("104")==0){//阴天
+            String suffix="104";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+        }
+        else if (CurrentinfoCode.compareTo("200")>=0
+                &&CurrentinfoCode.compareTo("213")<=0){//起风天气
+            String suffix="200_213";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+        }
+        else if (CurrentinfoCode.compareTo("300")>=0
+                &&CurrentinfoCode.compareTo("313")<=0){//下雨天气
+
+            if (CurrentinfoCode.compareTo("302")>=0
+                    &&CurrentinfoCode.compareTo("304")<=0){//下雨同时打雷
+
+                String suffix="302_304";
+                String weatherBackgroundImageName=prefix+suffix;
+                imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+            }
+
+
+            //只下雨不打雷
+            String suffix="300_313";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+        }
+        else if (CurrentinfoCode.compareTo("400")>=0
+                &&CurrentinfoCode.compareTo("407")<=0){//下雪天气
+            String suffix="400_407";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+        }
+        else if (CurrentinfoCode.compareTo("500")>=0
+                &&CurrentinfoCode.compareTo("501")<=0){//起雾天气
+            String suffix="500_501";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+        }
+        else if (CurrentinfoCode.compareTo("502")==0){//霾
+            String suffix="502";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+        }
+        else if (CurrentinfoCode.compareTo("503")>=0
+                &&CurrentinfoCode.compareTo("508")<=0){//扬尘或沙尘暴天气
+
+            String suffix="503_508";
+            String weatherBackgroundImageName=prefix+suffix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+        }
+        else{ //其他返回结果
+
+            String suffix="200_213";
+            String weatherBackgroundImageName=prefix;
+            imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+        }
+
+
+        // String weatherLogoName="test";
+
+        SettingFragment.settingFragmentLayout.setBackgroundResource(imageId);
     }
 
 

@@ -15,7 +15,7 @@
         android:gravity="center_vertical"
         android:text="he"
         android:textSize="25sp"
-        android:textColor="@color/colorPrimary"/>
+        android:textColor="#F0FFFF"/>
 
     <LinearLayout
         android:layout_height="match_parent"
@@ -36,7 +36,7 @@
                   android:gravity="center_vertical"
 
                   android:textSize="30sp"
-                  android:textColor="@color/colorPrimary"/>
+                  android:textColor="#F0FFFF"/>
 
         <TextView android:id="@+id/now_weather_Info_textView"
                   android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                   android:gravity="center_vertical"
 
                   android:textSize="15sp"
-                  android:textColor="@color/colorPrimary"/>
+                  android:textColor="#F0FFFF"/>
 
 
 

@@ -1,0 +1,9 @@
+CN101010100	beijing	北京	CN	China	中国	beijing	北京	beijing	北京	39.904989	116.405285
+CN101010200	haidian	海淀	CN	China	中国	beijing	北京	beijing	北京	39.956074	116.310316
+CN101010300	chaoyang	朝阳	CN	China	中国	beijing	北京	beijing	北京	39.921489	116.486409
+CN101010400	shunyi	顺义	CN	China	中国	beijing	北京	beijing	北京	40.128936	116.653525
+CN101010500	huairou	怀柔	CN	China	中国	beijing	北京	beijing	北京	40.324272	116.637122
+CN101010600	tongzhou	通州	CN	China	中国	beijing	北京	beijing	北京	39.902486	116.658603
+CN101010700	changping	昌平	CN	China	中国	beijing	北京	beijing	北京	40.218085	116.235906
+CN101010800	yanqing	延庆	CN	China	中国	beijing	北京	beijing	北京	40.465325	115.985006
+CN101010900	fengtai	丰台	CN	China	中国	beijing	北京	beijing	北京	39.863642	116.286968

@@ -3,5 +3,5 @@
 
     <item android:id="@+id/menu_item_delete_city"
         android:icon="@android:drawable/ic_menu_delete"
-        android:title="Delete"/>
+        android:title="删除"/>
 </menu>
