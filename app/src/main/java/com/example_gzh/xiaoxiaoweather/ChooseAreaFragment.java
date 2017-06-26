@@ -67,9 +67,9 @@ public class ChooseAreaFragment extends Fragment {
 
     private ListView listView;
 
-    private SearchResultAdapter adapter;
+    private ArrayAdapter<String> adapter;
 
-    private List<cityItem> dataList=new ArrayList<>();
+    private List<String> dataList=new ArrayList<>();
 
 
 
@@ -93,7 +93,7 @@ public class ChooseAreaFragment extends Fragment {
 
     private cityItem item;
 
-    private EditText userInputEditText;
+  //  private EditText userInputEditText;
 
     private Button searchButton;
 
@@ -104,7 +104,7 @@ public class ChooseAreaFragment extends Fragment {
     private RelativeLayout searchLayout;
 
 
-    private LinearLayout chooseAreaLayout;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -120,41 +120,18 @@ public class ChooseAreaFragment extends Fragment {
 
         //searchLayout=(RelativeLayout) v.findViewById(R.id.search_layout);
 
-        chooseAreaLayout=(LinearLayout) v.findViewById(R.id.choose_area_fragment_layout);
+
+        backButton=(Button) v.findViewById(R.id.back_Button);
 
 
-        titleText=(TextView) v.findViewById(R.id.title_TextView);
+
+        titleText=(TextView) v.findViewById(R.id.title_text);
 
         listView=(ListView) v.findViewById(R.id.list_view);
 
-        adapter=new SearchResultAdapter(getActivity(),R.layout.serach_city_result_list_item,dataList);
-
+        adapter=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,dataList);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-            @Override
-            public void onItemClick(AdapterView<?> parent,View v,int position,
-                                    long id) {
-
-                        cityId=dataList.get(position).getCityId();
-                if (getActivity() instanceof MainActivity) { //刚启动程序
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", cityId);
-                    startActivity(intent);
-                    chooseAreaLayout.setVisibility(View.GONE);
-                    getActivity().finish();
-                } else if (getActivity() instanceof WeatherActivity) {//以获取天气信息，现在切换城市
-                    WeatherActivity activity = (WeatherActivity) getActivity();
-                    activity.drawerLayout.closeDrawers();
-                    activity.swipeRefresh.setRefreshing(true);
-                    activity.requestWeather(cityId);
-
-                }
-
-
-                        }
-            });
-
+      /*/
         userInputEditText=(EditText) v.findViewById(R.id.userInputEditText);
         userInputEditText.addTextChangedListener(new TextWatcher(){
 
@@ -192,10 +169,10 @@ public class ChooseAreaFragment extends Fragment {
 
         });
 
+/*/
 
 
-
-        searchButton=(Button) v.findViewById(R.id.search_button);
+      //  searchButton=(Button) v.findViewById(R.id.search_button);
         /*/
         searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -231,6 +208,9 @@ public class ChooseAreaFragment extends Fragment {
 /*/
 
 
+
+
+        /*/
         try {
             cityItem item = Utility.readFromLocalContent(getActivity(),"武汉");
             cityId=item.getCityId();
@@ -240,6 +220,10 @@ public class ChooseAreaFragment extends Fragment {
 
 
         Toast.makeText(getActivity(), "怀柔的Id: "+cityId, Toast.LENGTH_LONG).show();
+
+
+      /*/
+
         return v;
     }
 
@@ -253,7 +237,7 @@ public class ChooseAreaFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         LitePal.getDatabase();
-/*/
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent,View v,int position,
@@ -307,9 +291,277 @@ public class ChooseAreaFragment extends Fragment {
 
         queryProvinces();
 
-        /*/
+
 
     }
+
+
+
+
+    /**
+     150      * 查询全国所有的省，优先从数据库查询，如果没有查询到再到服务器上查询
+     151      * */
+     private void queryProvinces(){
+                 titleText.setText("中国");
+                 backButton.setVisibility(View.GONE);
+               provinceList= DataSupport.findAll(Province.class);
+
+
+                if (provinceList.size()>0){
+                        dataList.clear();
+                      for (Province province:provinceList){
+                                 dataList.add(province.getProvinceName());
+                            }
+                    adapter.notifyDataSetChanged();
+                        listView.setSelection(0);
+                         currentLevel=LEVEL_PROVINCE;
+                    }else {
+
+
+                        new Thread(new Runnable() {
+                 @Override
+               public void run() {
+                                        String address="http://guolin.tech/api/china";
+                                        queryFromServer(address,"province");
+                                   }
+           }).start();
+
+
+                     }
+
+
+
+
+            }
+
+
+
+
+          private void queryCities(){
+
+
+               titleText.setText(selectedProvince.getProvinceName());
+               backButton.setVisibility(View.VISIBLE);
+
+
+               cityList=DataSupport.where("provinceid=?",String.valueOf(selectedProvince.getId())).find(City.class);
+
+
+               if(cityList.size()>0){
+                       dataList.clear();
+                        for (City city:cityList){
+                                dataList.add(city.getCityName());
+                            }
+
+
+                        adapter.notifyDataSetChanged();
+                         listView.setSelection(0);
+                         currentLevel=LEVEL_CITY;
+                   }else{
+
+
+                        new Thread(new Runnable() {
+               @Override
+               public void run() {
+                                        int provinceCode=selectedProvince.getProvinceCode();
+                                       String address="http://guolin.tech/api/china/"+provinceCode;
+                                       queryFromServer(address,"city");
+                                    }
+            }).start();
+
+
+                   }
+
+
+          }
+
+
+
+           private void queryCounties(){
+
+
+                 titleText.setText(selectedCity.getCityName());
+               backButton.setVisibility(View.VISIBLE);
+               countyList=DataSupport.where("cityid=?",String.valueOf(selectedCity.getCityId())).find(County.class);
+
+
+                if (countyList.size()>0){
+                         dataList.clear();
+                       for (County county:countyList){
+                              dataList.add(county.getCountyName());
+                            }
+                        adapter.notifyDataSetChanged();
+                       listView.setSelection(0);
+                       currentLevel=LEVEL_COUNTY;
+                   }else{
+
+
+                        new Thread(new Runnable() {
+                @Override
+                 public void run() {
+                                        int provinceCode=selectedProvince.getProvinceCode();
+                                     int cityCode=selectedCity.getCityCode();
+                                    String address="http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
+                                      queryFromServer(address,"county");
+                                    }
+           }).start();
+
+
+                   }
+            }
+
+
+         /**
+      * 从服务器获取数据
+      * */
+           private void queryFromServer(String address,final String type) {
+
+
+
+
+              getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                                  showProgressDialog();
+                           }
+        });
+
+
+               try {
+                        OkHttpClient client = new OkHttpClient();
+                         Request request = new Request.Builder()
+                              .url(address)
+                                 .build();
+
+
+                        // http://10.0.2.2/getdata.json
+                        Response response = client.newCall(request).execute();
+
+
+                        String responseData = response.body().string();
+                        boolean result = false;
+
+
+                       if ("province".equals(type)) {
+                               result = Utility.handleProvinceResponse(responseData);
+                          } else if ("city".equals(type)) {
+                                result = Utility.handleCityResponse(responseData, selectedProvince.getId());
+
+
+                          } else if ("county".equals(type)) {
+                                 result = Utility.handleCountyResponse(responseData, selectedCity.getCityId());
+                           }
+
+
+                       if (result) {
+
+
+                                 getActivity().runOnUiThread(new Runnable() {
+                     @Override
+                   public void run() {
+                                                 Toast.makeText(getActivity(), "GET_RESULT", Toast.LENGTH_SHORT).show();
+                                               closeProgressDialog();
+                                               if ("province".equals(type)) {
+                                                      queryProvinces();
+                                                     } else if ("city".equals(type)) {
+                                                       queryCities();
+                                                   } else if ("county".equals(type)) {
+                                                         queryCounties();
+                                                    }
+                                             }
+              });
+                            }
+
+
+
+
+                         //  parseXMLWithPull(responseData);
+                      // showToast(responseData);
+                        //   parseJSONWithJSONObject(responseData);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                     }
+            }
+
+
+
+
+
+
+           //   <用封装的网络请求接口不能正常工作>
+               /*   HttpUtil.sendOkHttpRequest(address, new Callback() {
+319             @Override
+320             public void onFailure(Call call, IOException e) {
+321                 getActivity().runOnUiThread(new Runnable() {
+322                     @Override
+323                     public void run() {
+324                         closeProgressDialog();
+325                         Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
+326                     }
+327                 });
+328             }
+329
+330             @Override
+331             public void onResponse(Call call, Response response) throws IOException {
+332
+333                 String responseText=response.body().toString();
+334
+335
+336                 responseResult=responseText;
+337
+338                 boolean result=false;//记录解析从服务器返回数据是否成功
+339
+340
+341                 getActivity().runOnUiThread(new Runnable() {
+342                     @Override
+343                     public void run() {
+344                         //  showProgressDialog();
+345                         Toast.makeText(getActivity(),"Response:"+responseResult,Toast.LENGTH_LONG).show();
+346
+347                     }
+348                 });
+349
+350
+351
+352                 if("province".equals(type)){
+353                     result= Utility.handleProvinceResponse(responseText);
+354                 }else if("city".equals(type)){
+355                     result=Utility.handleCityResponse(responseText,selectedProvince.getId());
+356
+357                 }else if ("county".equals(type)){
+358                     result=Utility.handleCountyResponse(responseText,selectedCity.getCityId());
+359                 }
+360
+361                 if (result){
+362
+363                     getActivity().runOnUiThread(new Runnable() {
+364                         @Override
+365                         public void run() {
+366                             Toast.makeText(getActivity(),"GET_RESULT",Toast.LENGTH_SHORT).show();
+367                             closeProgressDialog();
+368                             if ("province".equals(type)){
+369                                 queryProvinces();
+370                             }else if ("city".equals(type)){
+371                                 queryCities();
+372                             }else if ("county".equals(type)){
+373                                 queryCounties();
+374                             }
+375                         }
+376                     });
+377                 }
+378
+379                 Toast.makeText(getActivity(),"GET_RESULT_fAILED",Toast.LENGTH_SHORT).show();
+380
+381
+382
+383
+384
+385             }
+386         });
+387
+388
+389
+390     }
 
 
 
@@ -338,7 +590,7 @@ public class ChooseAreaFragment extends Fragment {
 
 
 
-
+/*/
     public class SearchResultAdapter extends ArrayAdapter<cityItem>{
 
         private int layoutId;
@@ -379,7 +631,7 @@ public class ChooseAreaFragment extends Fragment {
 
     }
 
-
+/*/
 
 
 }

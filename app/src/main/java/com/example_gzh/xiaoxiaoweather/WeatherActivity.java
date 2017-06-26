@@ -90,7 +90,7 @@ public class WeatherActivity extends ActionBarActivity {
 
     private LinearLayout settingLayout;
 
-    private LinearLayout chooseAreaLayout;
+ //   private LinearLayout chooseAreaLayout;
 
 
     private static Weather currentDisplayWeather;
@@ -117,9 +117,7 @@ public class WeatherActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_weather);
 
-        chooseAreaLayout=(LinearLayout) findViewById(R.id.choose_area_fragment_layout);
 
-        chooseAreaLayout.setVisibility(View.GONE);
 
 
 
@@ -406,7 +404,7 @@ public class WeatherActivity extends ActionBarActivity {
 
                             }
 
-                          //  swipeRefresh.setRefreshing(false);
+                            swipeRefresh.setRefreshing(false);
                         }
                     });
 
@@ -415,7 +413,7 @@ public class WeatherActivity extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(WeatherActivity.this,"获取天气失败exception",Toast.LENGTH_SHORT).show();
-                 // swipeRefresh.setRefreshing(false);
+                  swipeRefresh.setRefreshing(false);
                 }
 
             }

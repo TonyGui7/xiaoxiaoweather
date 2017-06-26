@@ -188,14 +188,7 @@ public class Utility {
 
          try {
 
-             String encoding="UTF-8";
-             // String path=fileName;
-             //File file=new File(path);
-             InputStream in=context.getResources().openRawResource(R.raw.china_city_list);
-             // FileInputStream in=new FileInputStream(file);
-             //  InputStream in=MyApplication.getContext().getApplicationContext().getAssets().open(fileName);
-             InputStreamReader reader=new InputStreamReader(in,encoding);
-             BufferedReader bufferedReader=new BufferedReader(reader);
+
 
              if (hasItemOnLocalFile(context,cityName)) {
                 hasCall_hasItemOnLocalFileMethod=false;

@@ -1,6 +1,7 @@
 package com.example_gzh.xiaoxiaoweather;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -116,8 +117,11 @@ public class SettingFragment extends Fragment {
             public void onClick(View v){
                 addCityClick=true;
                 WeatherActivity.drawerLayout.closeDrawers();
-                ChooseAreaFragment.titleText.setText("选择您要添加的市县");
-                WeatherActivity.drawerLayout.openDrawer(GravityCompat.START);
+                ChooseAreaFragment.titleText.setText("潇潇天气");
+                Intent i=new Intent(getActivity(),QueryCityActivity.class);
+                startActivity(i);
+
+              //WeatherActivity.drawerLayout.openDrawer(GravityCompat.START);
             }
         });
 
