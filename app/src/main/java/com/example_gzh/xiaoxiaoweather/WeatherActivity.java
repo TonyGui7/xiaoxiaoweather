@@ -166,7 +166,7 @@ public class WeatherActivity extends ActionBarActivity {
             weatherLayout.setVisibility(View.INVISIBLE);
             if(HttpUtil.isNetworkConnected(WeatherActivity.this)){
                 requestWeather(mWeatherId);
-                swipeRefresh.setRefreshing(false);
+
             }else {
                 Toast.makeText(WeatherActivity.this, "无网络连接", Toast.LENGTH_SHORT).show();
             }
@@ -312,8 +312,8 @@ public class WeatherActivity extends ActionBarActivity {
 
 
                    // Request request = new Request.Builder()
-                     //       .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
-                     //       .build();   //能够获取未来一周的天气信息
+                    //        .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
+                    //        .build();   //能够获取未来一周的天气信息
 
                   //  Request request = new Request.Builder()
                      //       .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
@@ -324,9 +324,11 @@ public class WeatherActivity extends ActionBarActivity {
 
                 final  String responseData = response.body().string();
                     //  parseXMLWithPull(responseData);
-                    showToast(responseData);
+                  //  showToast(responseData);
 
                  final  Weather weather=Utility.handleWeatherResponse(responseData);
+
+
 
 
                //     Weather weather1=new Weather();

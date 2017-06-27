@@ -1,5 +1,6 @@
 package com.example_gzh.xiaoxiaoweather;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +31,7 @@ import com.example_gzh.xiaoxiaoweather.component_obj.addedCitesListLab;
 import com.example_gzh.xiaoxiaoweather.db.City;
 import com.example_gzh.xiaoxiaoweather.db.County;
 import com.example_gzh.xiaoxiaoweather.gson.Weather;
+import com.example_gzh.xiaoxiaoweather.util.HttpUtil;
 import com.example_gzh.xiaoxiaoweather.util.Utility;
 
 import org.w3c.dom.Text;
@@ -57,6 +59,11 @@ public class SettingFragment extends Fragment {
     public static final String ADDED_CITY_INFO_PREF="addedCityInfo";
 
     public static final String ADDED_CITY_LIST_SIZE="addedCityCount";
+
+
+
+
+    public static final int  REQUEST_SEARCH_RESULT_CITY_ID=0;
 
     /**被添加的城市天气列表子控件*/
     private TextView addedCity;
@@ -116,10 +123,10 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v){
                 addCityClick=true;
-                WeatherActivity.drawerLayout.closeDrawers();
-                ChooseAreaFragment.titleText.setText("潇潇天气");
+              //  WeatherActivity.drawerLayout.closeDrawers();
+
                 Intent i=new Intent(getActivity(),QueryCityActivity.class);
-                startActivity(i);
+                startActivityForResult(i,REQUEST_SEARCH_RESULT_CITY_ID);
 
               //WeatherActivity.drawerLayout.openDrawer(GravityCompat.START);
             }
@@ -466,6 +473,44 @@ public class SettingFragment extends Fragment {
 
 
         return super.onContextItemSelected(item);
+    }
+
+
+
+
+
+
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+
+        if (resultCode!= Activity.RESULT_OK){
+            return;
+        }
+
+
+
+        if (requestCode==REQUEST_SEARCH_RESULT_CITY_ID){
+            if (HttpUtil.isNetworkConnected(getActivity())) {
+                String weatherId = (String) data.getSerializableExtra(QueryCityFragment.EXTRA_SEARCH_RESULT_CITY_ID);
+                WeatherActivity activity = (WeatherActivity) getActivity();
+
+                activity.swipeRefresh.setRefreshing(true);
+                activity.requestWeather(weatherId);
+
+            }
+            else {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity(), "无网络连接", Toast.LENGTH_LONG).show();
+                    }
+                });
+                activity.swipeRefresh.setRefreshing(false);
+            }
+        }
+
+
+
     }
 
 
