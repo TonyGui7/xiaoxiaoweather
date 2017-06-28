@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -288,6 +289,45 @@ public static boolean hasItemOnLocalFile(Context context,String cityName){
 
         return list;
     }
+
+
+    /**
+     * 根据用户输入的字符来匹配可能的城市选项，用户输入的可能不是城市全名
+     * @param UserInput
+     * @param context
+     * @return list
+     * */
+    public static ArrayList<cityItem> matchItem(Context context,CharSequence UserInput){
+
+        ArrayList<cityItem> list=new ArrayList<>();
+
+        try {
+
+            String encoding="UTF-8";
+            // String path=fileName;
+            //File file=new File(path);
+            InputStream in=context.getResources().openRawResource(R.raw.china_city_list);
+            // FileInputStream in=new FileInputStream(file);
+            //  InputStream in=MyApplication.getContext().getApplicationContext().getAssets().open(fileName);
+            InputStreamReader reader=new InputStreamReader(in,encoding);
+            BufferedReader bufferedReader=new BufferedReader(reader);
+            String readResult=null;
+            while((readResult=bufferedReader.readLine())!=null){
+                cityItem item=construct_cityItem(readResult);
+                if (item.getCityChineseName().contains(UserInput)){
+                    list.add(item);
+
+                }
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
+
+    }
+
 
 
 

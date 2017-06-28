@@ -16,6 +16,34 @@ public class Now {
     public More more;
 
 
+     /*/
+
+    @SerializedName("fl")
+    public String feelTemperature;//体感温度
+
+
+    @SerializedName("hum")
+   public String humidity;//相对湿度(%)
+
+
+    @SerializedName("pcpn")
+    public String rainfall;//降雨量(单位/mm)
+
+    @SerializedName("pres")
+    public String pressure;//气压(单位/Pa)
+
+
+    @SerializedName("vis")
+    public String visibility;//能见度(单位/km)
+
+
+
+    public Wind wind;// 风
+
+/*/
+
+
+
     public class More{
 
         @SerializedName("code")
@@ -24,5 +52,24 @@ public class Now {
         @SerializedName("txt")
         public String info;
     }
+
+
+
+/*/
+    public class Wind{
+        @SerializedName("dir")
+        public String windDirection;  //风向
+
+
+        @SerializedName("sr")
+        public String windStrength;  //风的级数
+
+        @SerializedName("spd")
+        public String windSpeed;  //风速(单位km/h)
+
+
+    }
+
+    /*/
 
 }

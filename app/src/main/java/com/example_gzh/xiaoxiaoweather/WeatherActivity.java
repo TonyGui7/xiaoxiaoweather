@@ -336,7 +336,7 @@ public class WeatherActivity extends ActionBarActivity {
                //    weather1.status="ok";
 
 
-                   // showToast(weather.status);
+                 //   showToast(weather.status);
 
                 //    updateWeatherInfoOnUIThread(weather,responseData);
 

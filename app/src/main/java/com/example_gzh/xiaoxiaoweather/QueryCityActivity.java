@@ -10,4 +10,13 @@ public class QueryCityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_city);
     }
+
+
+
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        SettingFragment.addCityClick=false;
+    }
 }

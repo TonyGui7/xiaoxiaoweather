@@ -122,7 +122,7 @@ public class SettingFragment extends Fragment {
         addCityButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                addCityClick=true;
+              //  addCityClick=true;
               //  WeatherActivity.drawerLayout.closeDrawers();
 
                 Intent i=new Intent(getActivity(),QueryCityActivity.class);
@@ -493,7 +493,9 @@ public class SettingFragment extends Fragment {
             if (HttpUtil.isNetworkConnected(getActivity())) {
                 String weatherId = (String) data.getSerializableExtra(QueryCityFragment.EXTRA_SEARCH_RESULT_CITY_ID);
                 WeatherActivity activity = (WeatherActivity) getActivity();
+                Toast.makeText(activity, "北京的ID:"+weatherId, Toast.LENGTH_LONG).show();
 
+                WeatherActivity.drawerLayout.closeDrawers();
                 activity.swipeRefresh.setRefreshing(true);
                 activity.requestWeather(weatherId);
 
