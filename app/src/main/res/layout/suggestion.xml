@@ -3,49 +3,434 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-    android:layout_margin="15dp"
-    android:background="@color/componentBackgroundDefault">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_margin="15dp"
+              android:background="#00000000"
+              android:paddingTop="30dp">
+
+
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:text="生活指数"
-        android:textColor="@color/textColorDefault"
+        android:text="生活指南"
+        android:textColor="@color/componentBackgroundDefault"
         android:textSize="20sp"/>
 
 
-    <TextView
-        android:id="@+id/comfort_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
 
 
-        android:textColor="@color/textColorDefault"
-        />
+
+               //穿衣指数和感冒指数
+        <android.support.percent.PercentFrameLayout
+
+            android:layout_height="80dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp">
 
 
-    <TextView
-        android:id="@+id/car_wash_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+
+                //穿衣指数
+            <android.support.percent.PercentFrameLayout
+                android:id="@+id/dressSuggestionLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="left"
+                app:layout_widthPercent="50%"
+                app:layout_heightPercent="100%">
 
 
-        android:textColor="@color/textColorDefault"
-        />
-
-    <TextView
-        android:id="@+id/sport_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+                <Button
+                    android:id="@+id/dressButton"
+                    android:layout_gravity="left"
+                    app:layout_widthPercent="40%"
+                    app:layout_heightPercent="100%"
+                    android:background="@drawable/dress_suggestion"/>
 
 
-        android:textColor="@color/textColorDefault"
-        />
+                <LinearLayout
+
+                    android:layout_gravity="right"
+                    android:orientation="vertical"
+                    app:layout_widthPercent="60%"
+                    app:layout_heightPercent="100%" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="穿衣指数"
+                        android:textColor="@color/componentBackgroundDefault"
+                        android:textSize="10sp"/>
+
+                    <TextView
+                        android:id="@+id/dressBriefTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+
+                        android:textColor="@color/componentBackgroundDefault"
+                        android:textSize="20sp"/>
+
+
+                </LinearLayout>
+
+            </android.support.percent.PercentFrameLayout>
+
+
+
+               //感冒指数
+            <android.support.percent.PercentFrameLayout
+                android:id="@+id/fluSuggestionLayout"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                app:layout_widthPercent="50%"
+                app:layout_heightPercent="100%">
+
+
+                <Button
+                    android:layout_gravity="left"
+                    app:layout_widthPercent="40%"
+                    app:layout_heightPercent="100%"
+                    android:background="@drawable/flu_suggestion"/>
+
+
+                <LinearLayout
+
+                    android:layout_gravity="right"
+                    android:orientation="vertical"
+                    app:layout_widthPercent="60%"
+                    app:layout_heightPercent="100%" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+                        android:text="感冒指数"
+                        android:textColor="@color/componentBackgroundDefault"
+                        android:textSize="10sp"/>
+
+                    <TextView
+                        android:id="@+id/fluBriefTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
+
+                        android:textColor="@color/componentBackgroundDefault"
+                        android:textSize="20sp"/>
+
+
+                </LinearLayout>
+
+
+            </android.support.percent.PercentFrameLayout>
+
+
+
+
+
+
+
+
+
+            </android.support.percent.PercentFrameLayout>
+
+
+
+
+
+            //运动指数和洗车指数
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp">
+
+
+        //运动指数
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/sportSuggestionLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="100%">
+
+
+            <Button
+                android:layout_gravity="left"
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="100%"
+                android:background="@drawable/sport_suggestion"/>
+
+
+            <LinearLayout
+
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                app:layout_widthPercent="60%"
+                app:layout_heightPercent="100%" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="运动指数"
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/sportBriefTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.percent.PercentFrameLayout>
+
+
+        //洗车指数
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/carWashSuggestionLayout"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="100%">
+
+
+            <Button
+                android:layout_gravity="left"
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="100%"
+                android:background="@drawable/car_wash_suggestion"/>
+
+
+            <LinearLayout
+
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                app:layout_widthPercent="60%"
+                app:layout_heightPercent="100%" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="洗车指数"
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/carWashBriefTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.percent.PercentFrameLayout>
+
+
+
+
+    </android.support.percent.PercentFrameLayout>
+
+
+
+
+    //旅游指数和紫外线指数
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp">
+
+
+        //旅游指数
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/travelSuggestionLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="100%">
+
+
+            <Button
+                android:layout_gravity="left"
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="100%"
+                android:background="@drawable/travel_suggestion"/>
+
+
+            <LinearLayout
+
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                app:layout_widthPercent="60%"
+                app:layout_heightPercent="100%" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="旅游指数"
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/travelBriefTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.percent.PercentFrameLayout>
+
+
+        //紫外线指数
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/ultravioletSuggestionLayout"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="100%">
+
+
+            <Button
+                android:layout_gravity="left"
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="100%"
+                android:background="@drawable/ultraviolet_suggestion"/>
+
+
+            <LinearLayout
+
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                app:layout_widthPercent="60%"
+                app:layout_heightPercent="100%" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="紫外线指数"
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/ultravioletBriefTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.percent.PercentFrameLayout>
+
+
+
+
+
+    </android.support.percent.PercentFrameLayout>
+
+
+    //舒适度指数
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_height="80dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp">
+
+
+        //舒适度指数
+        <android.support.percent.PercentFrameLayout
+            android:id="@+id/comfortSuggestionLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            app:layout_widthPercent="50%"
+            app:layout_heightPercent="100%">
+
+
+            <Button
+                android:layout_gravity="left"
+                app:layout_widthPercent="40%"
+                app:layout_heightPercent="100%"
+                android:background="@drawable/comfort_suggestion"/>
+
+
+            <LinearLayout
+
+                android:layout_gravity="right"
+                android:orientation="vertical"
+                app:layout_widthPercent="60%"
+                app:layout_heightPercent="100%" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:text="舒适度指数"
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:id="@+id/comfortBriefTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.percent.PercentFrameLayout>
+
+
+
+
+
+
+    </android.support.percent.PercentFrameLayout>
+
+
+
 
 
 

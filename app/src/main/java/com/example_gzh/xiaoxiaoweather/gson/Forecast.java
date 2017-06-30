@@ -35,10 +35,13 @@ public class Forecast {
 
     public Wind wind;// 风
 
+/*/
 
+
+    @SerializedName("astro")
     public AstronomyInfo astronomyInfo;//天文信息
 
-/*/
+
 
     public class Temperature{
         public String max;
@@ -75,7 +78,7 @@ public class Forecast {
     }
 
 
-
+/*/
 
     public class AstronomyInfo{
         @SerializedName("mr")
@@ -90,11 +93,11 @@ public class Forecast {
         public String sunRiseTime;  //太阳升起时间
 
 
-        @SerializedName("mr")
+        @SerializedName("ss")
         public String sunFallTime;  //太阳降下的时间
 
     }
 
-    /*/
+
 
 }

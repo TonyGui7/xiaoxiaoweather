@@ -12,6 +12,17 @@
     <color name="forecastTextColor">#0000FF</color>
     <color name="forecastBackground">#fff</color>
 
+    <color name="SuggestionActivity_Brief_Detail_Color">#fff</color>
 
+    <color name="SuggestionActivity_city_temp_Color">#CCCCCC</color>
+
+
+/*空气污染程度示例颜色***/
+    <color name="AQI_excellent_color">#0000FF</color>
+    <color name="AQI_good_color">#082E54</color>
+
+    <color name="AQI_Lightpollute_color">#C76114</color>
+    <color name="AQI_Middlepollute_color">#808069</color>
+    <color name="AQI_Severepollute_color">#FF0000</color>
 
 </resources>

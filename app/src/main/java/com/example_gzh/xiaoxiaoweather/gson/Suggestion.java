@@ -21,7 +21,7 @@ public class Suggestion {
 
     public Sport sport;  //运动指数
 
-    /*/
+
 
     @SerializedName("drsg")
     public Dress dress;  //穿衣指数
@@ -38,17 +38,17 @@ public class Suggestion {
     public Ultraviolet ultraviolet;//紫外线指数
 
 
-/*/
+
 
 
 
 
     public class Comfort{
 
-        /*/
+
         @SerializedName("brf")
         public String brief;
-        /*/
+
 
         @SerializedName("txt")
         public String info;
@@ -57,11 +57,10 @@ public class Suggestion {
 
     public class CarWash{
 
-        /*/
 
         @SerializedName("brf")
         public String brief;
-        /*/
+
 
         @SerializedName("txt")
         public String info;
@@ -69,17 +68,17 @@ public class Suggestion {
 
     public class Sport{
 
-        /*/
+
         @SerializedName("brf")
         public String brief;
-        /*/
+
 
         @SerializedName("txt")
         public String info;
     }
 
 
-/*/
+
     public class Dress{
 
         @SerializedName("brf")
@@ -127,6 +126,6 @@ public class Suggestion {
 
     }
 
-/*/
+
 
 }

@@ -10,6 +10,7 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.percent.PercentFrameLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -68,11 +69,11 @@ public class WeatherActivity extends ActionBarActivity {
 
     private TextView pm25Text;
 
-    private TextView comfortText;
+   // private TextView comfortText;
 
-    private TextView carWashText;
+  //  private TextView carWashText;
 
-    private TextView sportText;
+ //   private TextView sportText;
 
     private String responseData;
 
@@ -100,6 +101,158 @@ public class WeatherActivity extends ActionBarActivity {
     public static boolean hasRequestWeather=false;
 
     private  static final String WEATHERID_STORE_KEY="weather";
+
+
+
+
+
+
+    /***********suggestion Layout********************/
+
+    /*穿衣指数**/
+    private PercentFrameLayout dressLayout;
+    private TextView dressBriefTextView;
+    private String dressSugDetail;
+
+
+    /*感冒指数**/
+    private PercentFrameLayout fluLayout;
+    private TextView fluBriefTextView;
+    private String makeupSugDetail;
+
+
+    /*运动指数**/
+    private PercentFrameLayout sportLayout;
+    private TextView sportBriefTextView;
+    private String sportSugDetail;
+
+
+    /*洗车指数**/
+    private PercentFrameLayout carWashLayout;
+    private TextView carWashBriefTextView;
+    private String carWashSugDetail;
+
+
+    /*旅游指数**/
+    private PercentFrameLayout travelLayout;
+    private TextView travelBriefTextView;
+    private String travelSugDetail;
+
+
+
+    /*紫外线指数**/
+    private PercentFrameLayout ultravioletLayout;
+    private TextView ultravioletBriefTextView;
+    private String ultravioletSugDetail;
+
+
+    /*舒适度指数**/
+    private PercentFrameLayout comfortLayout;
+    private TextView comfortBriefTextView;
+    private String comfortSugDetail;
+
+
+    /*********************************/
+
+
+    /*用户点击生活指南的选项的键**/
+    public  static final String LIFE_SUGGESTION_ITEM="life_sugItem";
+
+    /*如下7个选项**/
+    public  static final int DRESS_SUGGESTION=1;
+
+    public  static final int SPORT_SUGGESTION=2;
+
+    public  static final int CARWASH_SUGGESTION=3;
+
+    public  static final int TRAVEL_SUGGESTION=4;
+
+    public  static final int ULTRAVIOLET_SUGGESTION=5;
+
+    public  static final int COMFORT_SUGGESTION=6;
+
+    public  static final int FLU_SUGGESTION=7;
+
+
+
+    public  static final String LIFE_SUGGESTION_BRIET="brief";
+
+    public  static final String LIFE_SUGGESTION_CITY="city";
+
+    public  static final String LIFE_SUGGESTION_TEMP="temperature";
+
+    public  static final String LIFE_SUGGESTION_DETAIL="detail";
+
+
+
+
+
+    /****日落日出降雨量等信息**********************************/
+
+     private TextView sunriseTimeTextView;
+
+     private TextView sunfallTimeTextView;
+
+     private TextView feelTempTextView;
+
+     private TextView humidityTextView;
+
+     private TextView pressureTextView;
+
+     private TextView visibilityTextView;
+
+     private TextView rainfallTextView;
+
+
+    /*****************************************/
+
+
+
+
+
+    /****风速等信息*******************/
+
+    private TextView windDirectionTextView;
+
+    private TextView windForceTextView;
+
+    private TextView windSpeedTextView;
+
+
+    private TextView nowWindForceTextView;
+    /***********************/
+
+
+
+
+    /****今天和明天的天气信息************************/
+
+      /*今天的天气信息**/
+
+      private Button today_aqi_Button;
+
+      private Button today_weatherInfo_Button;
+
+      private TextView today_TempRange_TextView;
+
+      private TextView today_weatherInfo_TextView;
+
+
+
+    /*明天的天气信息**/
+
+    private Button tomorow_aqi_Button;
+
+    private Button tomorow_weatherInfo_Button;
+
+    private TextView tomorow_TempRange_TextView;
+
+    private TextView tomorow_weatherInfo_TextView;
+
+    /*********************************/
+
+
+
 
 
     @Override
@@ -140,11 +293,109 @@ public class WeatherActivity extends ActionBarActivity {
 
         pm25Text=(TextView) findViewById(R.id.pm25_text);
 
-        comfortText=(TextView) findViewById(R.id.comfort_text);
 
-        carWashText=(TextView) findViewById(R.id.car_wash_text);
 
-        sportText=(TextView) findViewById(R.id.sport_text);
+        sunriseTimeTextView=(TextView) findViewById(R.id.sunriseTimeTextView);
+
+        sunfallTimeTextView=(TextView) findViewById(R.id.sunfallTimeTextView);
+
+        feelTempTextView=(TextView) findViewById(R.id.feelTempTextView);
+
+        humidityTextView=(TextView) findViewById(R.id.humidityTextView);
+
+        pressureTextView=(TextView) findViewById(R.id.pressureTextView);
+
+        visibilityTextView=(TextView) findViewById(R.id.visbilityTextView);
+
+        rainfallTextView=(TextView) findViewById(R.id.rainfallTextView);
+
+
+
+        windDirectionTextView=(TextView) findViewById(R.id.windDirectionTextView);
+
+        windForceTextView=(TextView) findViewById(R.id.windForceTextView);
+
+        windSpeedTextView=(TextView) findViewById(R.id.windSpeedTextView);
+
+
+        nowWindForceTextView=(TextView) findViewById(R.id.now_windForce_textView);
+
+
+
+         /*今天的天气信息**/
+
+        today_aqi_Button=(Button) findViewById(R.id.today_aqi_info_Button);
+
+        today_weatherInfo_Button=(Button) findViewById(R.id.today_weatherInfo_Button);
+
+        today_TempRange_TextView=(TextView)findViewById(R.id.today_tempRange_TextView);
+
+        today_weatherInfo_TextView=(TextView) findViewById(R.id.today_watherInfo_TextView);
+
+
+
+    /*明天的天气信息**/
+
+       tomorow_aqi_Button=(Button)findViewById(R.id.tomorow_aqi_info_Button);
+
+        tomorow_weatherInfo_Button=(Button)findViewById(R.id.tomorow_weatherInfo_Button);
+
+        tomorow_TempRange_TextView=(TextView)findViewById(R.id.tomorow_tempRange_TextView);
+
+        tomorow_weatherInfo_TextView=(TextView) findViewById(R.id.tomorow_watherInfo_TextView);
+
+
+
+
+
+        /*穿衣指数**/
+        dressLayout=(PercentFrameLayout) findViewById(R.id.dressSuggestionLayout);
+        dressBriefTextView=(TextView) findViewById(R.id.dressBriefTextView);
+        //  String dressSugDetail;
+
+
+    /*化妆指数**/
+        fluLayout=(PercentFrameLayout) findViewById(R.id.fluSuggestionLayout);
+        fluBriefTextView=(TextView) findViewById(R.id.fluBriefTextView);
+        //   private String makeupSugDetail;
+
+
+    /*运动指数**/
+        sportLayout=(PercentFrameLayout) findViewById(R.id.sportSuggestionLayout);
+        sportBriefTextView=(TextView) findViewById(R.id.sportBriefTextView);
+        //private String sportSugDetail;
+
+
+    /*洗车指数**/
+        carWashLayout=(PercentFrameLayout) findViewById(R.id.carWashSuggestionLayout);
+        carWashBriefTextView=(TextView) findViewById(R.id.carWashBriefTextView);
+//        private String carWashSugDetail;
+
+
+    /*旅游指数**/
+        travelLayout=(PercentFrameLayout) findViewById(R.id.travelSuggestionLayout);
+        travelBriefTextView=(TextView) findViewById(R.id.travelBriefTextView);
+        // private String travelSugDetail;
+
+
+
+    /*紫外线指数**/
+        ultravioletLayout=(PercentFrameLayout) findViewById(R.id.ultravioletSuggestionLayout);
+        ultravioletBriefTextView=(TextView) findViewById(R.id.ultravioletBriefTextView);
+        //  private String ultravioletSugDetail;
+
+
+    /*舒适度指数**/
+        comfortLayout=(PercentFrameLayout) findViewById(R.id.comfortSuggestionLayout);
+        comfortBriefTextView=(TextView) findViewById(R.id.comfortBriefTextView);
+        //  private String comfortSugDetail;
+
+
+        //  comfortText=(TextView) findViewById(R.id.comfort_text);
+
+     //   carWashText=(TextView) findViewById(R.id.car_wash_text);
+
+     //   sportText=(TextView) findViewById(R.id.sport_text);
 
 
         swipeRefresh=(SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
@@ -160,6 +411,7 @@ public class WeatherActivity extends ActionBarActivity {
           //  currentDisplayWeatherInfoCode=weather.now.more.infoCode;
             mWeatherId=weather.basic.weatherId;
             showWeatherInfo(weather);
+            updateSettingFragmentBackground();
         }else{  //天气数据没有缓存，需要到服务器获取数据
             mWeatherId=getIntent().getStringExtra("weather_id");
            // mWeatherId= "CN101010200";
@@ -239,6 +491,145 @@ public class WeatherActivity extends ActionBarActivity {
         switchCityProgressBar=(ProgressBar) findViewById(R.id.switch_city_ProgressBar);
 
 
+
+
+
+        dressLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,DRESS_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.dress.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.dress.info);
+
+                startActivity(i);
+
+            }
+        });
+
+
+
+
+
+        fluLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,FLU_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.flu.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.flu.info);
+
+                startActivity(i);
+            }
+        });
+
+
+
+
+
+        sportLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,SPORT_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.sport.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.sport.info);
+
+                startActivity(i);
+
+            }
+        });
+
+
+
+
+
+
+        carWashLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,CARWASH_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.carWash.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.carWash.info);
+
+                startActivity(i);
+
+            }
+        });
+
+
+
+
+
+        travelLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,TRAVEL_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.travel.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.travel.info);
+
+                startActivity(i);
+
+            }
+        });
+
+
+
+
+
+
+        ultravioletLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,ULTRAVIOLET_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.ultraviolet.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.ultraviolet.info);
+
+                startActivity(i);
+            }
+        });
+
+
+
+
+
+        comfortLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                Intent i=new Intent(WeatherActivity.this,LifeSuggestionActivity.class);
+                i.putExtra(LIFE_SUGGESTION_ITEM,COMFORT_SUGGESTION);
+                i.putExtra(LIFE_SUGGESTION_BRIET,currentDisplayWeather.suggestion.comfort.brief);
+                i.putExtra(LIFE_SUGGESTION_CITY,currentDisplayWeather.basic.cityName);
+                i.putExtra(LIFE_SUGGESTION_TEMP,currentDisplayWeather.now.temperature);
+                i.putExtra(LIFE_SUGGESTION_DETAIL,currentDisplayWeather.suggestion.comfort.info);
+
+                startActivity(i);
+
+            }
+        });
+
+
+
     }
 
 
@@ -308,11 +699,11 @@ public class WeatherActivity extends ActionBarActivity {
                     OkHttpClient client = new OkHttpClient();
                     Request request = new Request.Builder()
                             .url("https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
-                           .build();
+                          .build();
 
 
-                   // Request request = new Request.Builder()
-                    //        .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
+                  //  Request request = new Request.Builder()
+                   //         .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
                     //        .build();   //能够获取未来一周的天气信息
 
                   //  Request request = new Request.Builder()
@@ -369,7 +760,7 @@ public class WeatherActivity extends ActionBarActivity {
                                    String temp_update=weather.now.temperature;
 
                                     addedCitesListLab.get(WeatherActivity.this).updateItemInfo(cityName,weather_upate,weatherInfo_update,temp_update);
-
+                                    SettingFragment.adapter.notifyDataSetChanged();
                                 }
 
 
@@ -380,6 +771,14 @@ public class WeatherActivity extends ActionBarActivity {
 
                                     if (addedCitesListLab.get(WeatherActivity.this).hasItem(cityName)){
 
+                                        //对列表中的数据进行更新
+                                        String weather_upate=responseData;
+                                        String weatherInfo_update=weather.now.more.info;
+                                        String temp_update=weather.now.temperature;
+
+                                        addedCitesListLab.get(WeatherActivity.this).updateItemInfo(cityName,weather_upate,weatherInfo_update,temp_update);
+
+                                        SettingFragment.adapter.notifyDataSetChanged();
                                         Toast.makeText(WeatherActivity.this,cityName+"已添加",Toast.LENGTH_SHORT).show();
                                     }else {
 
@@ -448,6 +847,8 @@ public class WeatherActivity extends ActionBarActivity {
 
         String weatherInfo=weather.now.more.info;
 
+        String nowWindForce=weather.now.wind.windStrength;
+
         titleCity.setText(cityName);
 
         titleUpdateTime.setText(updateTime+"发布");
@@ -455,6 +856,8 @@ public class WeatherActivity extends ActionBarActivity {
         degreeText.setText(degree);
 
         weatherInfoText.setText(weatherInfo);
+
+        nowWindForceTextView.setText(nowWindForce);
 
         forecastLayout.removeAllViews();
 
@@ -478,6 +881,19 @@ public class WeatherActivity extends ActionBarActivity {
            // String weatherLogoName="test";
             int logoId=getResources().getIdentifier(weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
 
+
+
+            String sunriseTime=forecast.astronomyInfo.sunRiseTime;
+
+            String sunfallTime=forecast.astronomyInfo.sunFallTime;
+
+            String moonriseTime=forecast.astronomyInfo.moonRiseTime;
+
+
+            String moonfallTime=forecast.astronomyInfo.moonFallTime;
+
+
+
             infoLogoButton.setBackgroundResource(logoId);
             dateText.setText(forecast.date);
             infoText.setText(forecast.more.info);
@@ -497,6 +913,248 @@ public class WeatherActivity extends ActionBarActivity {
 
 
 
+        String today_aqi_info=weather.aqi.city.aqi;
+        int aqi_backgroundId=0;
+        if (today_aqi_info!=null) {
+        int aqi_info=Integer.parseInt(today_aqi_info);
+
+
+
+            if (aqi_info < 50) {//空气质量优秀
+                today_aqi_info = today_aqi_info + "优";
+                String aqi_background="aqi_excellent";
+                // String weatherLogoName="test";
+                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+            }
+
+            else if (aqi_info>= 51 &&
+                    aqi_info<= 100) {//空气质量良好
+
+                today_aqi_info = today_aqi_info + "良";
+
+                String aqi_background="aqi_good";
+                // String weatherLogoName="test";
+                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+            }
+
+
+            else if (aqi_info>= 101 &&
+                    aqi_info<= 200) {//轻度污染
+                today_aqi_info = today_aqi_info + "轻度污染";
+
+                String aqi_background="aqi_light_pollute";
+                // String weatherLogoName="test";
+                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+            }
+
+            else if (aqi_info>= 201 &&
+                    aqi_info<= 300) {//中度污染
+                today_aqi_info = today_aqi_info + "中度污染";
+
+                String aqi_background="aqi_middle_pollute";
+                // String weatherLogoName="test";
+                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+            }
+
+            else if (aqi_info>= 301) {//重度污染
+                today_aqi_info = today_aqi_info + "重度污染";
+
+                String aqi_background="aqi_severe_pollute";
+                // String weatherLogoName="test";
+                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+            }
+        }
+          /*今天的天气信息**/
+
+        today_aqi_Button.setText(today_aqi_info);
+        if (aqi_backgroundId!=0) {
+            today_aqi_Button.setBackgroundResource(aqi_backgroundId);
+        }
+     //   today_aqi_Button.setBackground(Color.);
+
+
+        String todayinfoCode=weather.forecastList.get(0).more.infoCode;
+
+        String today_weatherLogoName="weather_logo"+todayinfoCode;
+        // String weatherLogoName="test";
+        int today_logoId=getResources().getIdentifier(today_weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+        today_weatherInfo_Button.setBackgroundResource(today_logoId);
+
+        String today_tempRange=weather.forecastList.get(0).temperature.min+
+                "~"+weather.forecastList.get(0).temperature.max+"℃";
+
+        today_TempRange_TextView.setText(today_tempRange);
+
+        String todayWeatherInfo=weather.forecastList.get(0).more.info;
+
+        today_weatherInfo_TextView.setText(todayWeatherInfo);
+
+
+
+    /*明天的天气信息**/
+
+        tomorow_aqi_Button.setVisibility(View.INVISIBLE);
+
+        String tomorowinfoCode=weather.forecastList.get(1).more.infoCode;
+
+        String tomorow_weatherLogoName="weather_logo"+tomorowinfoCode;
+        // String weatherLogoName="test";
+        int tomorow_logoId=getResources().getIdentifier(tomorow_weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
+
+
+
+        tomorow_weatherInfo_Button.setBackgroundResource(tomorow_logoId);
+
+        String tomorow_tempRange=weather.forecastList.get(1).temperature.min+
+                "~"+weather.forecastList.get(1).temperature.max+"℃";
+
+
+        tomorow_TempRange_TextView.setText(tomorow_tempRange);
+
+        String tomorow_WeatherInfo=weather.forecastList.get(1).more.info;
+        tomorow_weatherInfo_TextView.setText(tomorow_WeatherInfo);
+
+
+
+        /*简要生活建议**/
+        String dressBrief=weather.suggestion.dress.brief;
+
+        String sportBrief=weather.suggestion.sport.brief;
+
+        String carWashBrief=weather.suggestion.carWash.brief;
+
+        String travelBrief=weather.suggestion.travel.brief;
+
+        String ultravioletBrief=weather.suggestion.ultraviolet.brief;
+
+        String comfortBrief=weather.suggestion.comfort.brief;
+
+        String fluBrief=weather.suggestion.flu.brief;
+
+
+        /*详细生活建议**/
+        String dressDetail=weather.suggestion.dress.info;
+
+        String sportDetail=weather.suggestion.sport.info;
+
+        String carWashDetail=weather.suggestion.carWash.info;
+
+        String travelDetail=weather.suggestion.travel.info;
+
+        String ultravioletDetail=weather.suggestion.ultraviolet.info;
+
+        String comfortDetail=weather.suggestion.comfort.info;
+
+        String fluDetail=weather.suggestion.flu.info;
+
+     //   CharSequence briefTest="le";
+
+        /*穿衣指数**/
+
+        dressBriefTextView.setText(dressBrief);
+
+
+
+    /*感冒指数**/
+
+        fluBriefTextView.setText(fluBrief);
+
+
+
+    /*运动指数**/
+
+        sportBriefTextView.setText(sportBrief);
+
+
+
+    /*洗车指数**/
+
+        carWashBriefTextView.setText(carWashBrief);
+
+
+
+    /*旅游指数**/
+
+        travelBriefTextView.setText(travelBrief);
+
+
+
+
+    /*紫外线指数**/
+
+       ultravioletBriefTextView.setText(ultravioletBrief);
+
+
+
+    /*舒适度指数**/
+
+        comfortBriefTextView.setText(comfortBrief);
+
+
+
+        String sunriseTime=weather.forecastList.get(0).astronomyInfo.sunRiseTime;
+
+        String sunfallTime=weather.forecastList.get(0).astronomyInfo.sunFallTime;
+
+        String moonriseTime=weather.forecastList.get(0).astronomyInfo.moonRiseTime;
+
+        String moonfallTime=weather.forecastList.get(0).astronomyInfo.moonFallTime;
+
+
+        String feelTemp=weather.now.feelTemperature+"℃";
+
+        String humidity=weather.now.humidity+"%";
+
+        String pressure=weather.now.pressure+"Pa";
+
+        String visibility=weather.now.visibility+"km";
+
+        String rainfall=weather.now.rainfall+"mm";
+
+
+
+        sunriseTimeTextView.setText(sunriseTime);
+
+        sunfallTimeTextView.setText(sunfallTime);
+
+        feelTempTextView.setText(feelTemp);
+
+        humidityTextView.setText(humidity);
+
+        pressureTextView.setText(pressure);
+
+        visibilityTextView.setText(visibility);
+
+        rainfallTextView.setText(rainfall);
+
+
+
+
+
+        String windDirection=weather.now.wind.windDirection;
+
+        String windForce=weather.now.wind.windStrength+"级";
+
+        String windSpeed=weather.now.wind.windSpeed+"km/h";
+
+
+        windDirectionTextView.setText(windDirection);
+
+        windForceTextView.setText(windForce);
+
+        windSpeedTextView.setText(windSpeed);
+
+
+
+
+        /*/
         String comfort="舒适度:    "+weather.suggestion.comfort.info;
 
         String carWash="洗车指数:    "+weather.suggestion.carWash.info;
@@ -508,6 +1166,7 @@ public class WeatherActivity extends ActionBarActivity {
         carWashText.setText(carWash);
 
         sportText.setText(sport);
+        /*/
 
         weatherLayout.setVisibility(View.VISIBLE);
 

@@ -15,9 +15,9 @@ public class AQI {
         public String aqi;
         public String pm25;
 
-        /*/
+
         @SerializedName("qlty ")
         public String airQuality;//空气质量级别
-        /*/
+
     }
 }

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="350dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingTop="30dp">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/componentBackgroundDefault"
+        android:text="综合指数"
+
+        android:layout_marginLeft="15dp"/>
+
+<android.support.percent.PercentFrameLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                   android:paddingTop="10dp">
+
+
+
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="left"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="top"
+            app:layout_heightPercent="70%">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/sun"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+        <android.support.percent.PercentFrameLayout
+
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            app:layout_heightPercent="30%">
+
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                app:layout_heightPercent="50%"
+                android:layout_gravity="top">
+
+                <TextView
+                    android:id="@+id/sunriseTimeTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20dp"/>
+
+
+                <TextView
+                    android:id="@+id/sunfallTimeTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+
+                    android:textColor="@color/componentBackgroundDefault"
+                    android:textSize="20dp"
+
+                    />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                app:layout_heightPercent="50%"
+                android:layout_gravity="bottom">
+
+            <TextView
+
+                 android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+
+                android:text="日出日落"
+                android:textColor="@color/componentBackgroundDefault"
+                android:textSize="20dp"
+
+                android:layout_centerInParent="true"/>
+
+
+            </RelativeLayout>
+
+        </android.support.percent.PercentFrameLayout>
+
+
+
+
+        </android.support.percent.PercentFrameLayout>
+
+
+
+
+    <RelativeLayout
+
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+
+
+            /**体感*/
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+
+                android:paddingTop="10dp">
+
+                <Button
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:background="@drawable/feel_temperature"/>
+
+
+                <TextView android:layout_height="match_parent"
+                          android:layout_width="wrap_content"
+                          android:textSize="15dp"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:text="体感"
+                          android:gravity="center_vertical"
+                          android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/feelTempTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"/>
+
+
+            </LinearLayout>
+
+
+
+            /**湿度*/
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <Button
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:background="@drawable/humidity"/>
+
+
+                <TextView android:layout_height="match_parent"
+                          android:layout_width="wrap_content"
+                          android:textSize="15dp"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:text="湿度"
+                          android:gravity="center_vertical"
+                          android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/humidityTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"/>
+
+            </LinearLayout>
+
+
+
+
+            /**气压*/
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+
+
+                <Button
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:background="@drawable/pressure"/>
+
+
+                <TextView android:layout_height="match_parent"
+                          android:layout_width="wrap_content"
+                          android:textSize="15dp"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:text="气压"
+                          android:gravity="center_vertical"
+                          android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/pressureTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"/>
+
+
+            </LinearLayout>
+
+
+
+            /**能见度*/
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+
+
+                <Button
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:background="@drawable/visibility"/>
+
+
+                <TextView android:layout_height="match_parent"
+                          android:layout_width="wrap_content"
+                          android:textSize="15dp"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:text="能见度"
+                          android:gravity="center_vertical"
+                          android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/visbilityTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"/>
+
+
+            </LinearLayout>
+
+            /**能见度*/
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+
+
+                <Button
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:background="@drawable/visibility"/>
+
+
+                <TextView android:layout_height="match_parent"
+                          android:layout_width="wrap_content"
+                          android:textSize="15dp"
+                          android:textColor="@color/colorPrimaryDark"
+                          android:text="降雨量"
+                          android:gravity="center_vertical"
+                          android:paddingLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/rainfallTextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"/>
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</android.support.percent.PercentFrameLayout>
+
+
+    </LinearLayout>

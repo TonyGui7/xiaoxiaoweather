@@ -16,7 +16,7 @@ public class Now {
     public More more;
 
 
-     /*/
+
 
     @SerializedName("fl")
     public String feelTemperature;//体感温度
@@ -40,7 +40,7 @@ public class Now {
 
     public Wind wind;// 风
 
-/*/
+
 
 
 
@@ -55,13 +55,13 @@ public class Now {
 
 
 
-/*/
+
     public class Wind{
         @SerializedName("dir")
         public String windDirection;  //风向
 
 
-        @SerializedName("sr")
+        @SerializedName("sc")
         public String windStrength;  //风的级数
 
         @SerializedName("spd")
@@ -70,6 +70,6 @@ public class Now {
 
     }
 
-    /*/
+
 
 }

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="#00000000">
+
+
+
+    /*今天的天气信息**/
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_gravity="left"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%">
+
+
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp">
+
+            <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="今天"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"/>
+
+
+
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/today_weatherInfo_Button"
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+
+                <TextView
+                    android:id="@+id/today_tempRange_TextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"/>
+
+
+
+
+                <TextView
+                    android:id="@+id/today_watherInfo_TextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp"/>
+
+
+
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+
+    </android.support.percent.PercentFrameLayout>
+
+
+
+
+     /**明天的天气信息**/
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_gravity="right"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="100%"
+        android:layout_marginRight="20dp"
+        >
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp">
+
+            <RelativeLayout
+                android:layout_height="50dp"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:textSize="15sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="明天"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"/>
+
+                    <Button
+                        android:id="@+id/tomorow_aqi_info_Button"
+                        android:layout_height="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"/>
+
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/tomorow_weatherInfo_Button"
+                    android:layout_height="30dp"
+                    android:layout_width="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+
+                <TextView
+                    android:id="@+id/tomorow_tempRange_TextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"/>
+
+
+
+
+                <TextView
+                    android:id="@+id/tomorow_watherInfo_TextView"
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="10dp"/>
+
+
+
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </android.support.percent.PercentFrameLayout>
+
+
+
+
+</android.support.percent.PercentFrameLayout>

@@ -2,29 +2,8 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-     android:layout_height="wrap_content">
+     android:layout_height="200dp">
 
-    <TextView
-        android:id="@+id/title_update_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_alignParentLeft="true"
-
-        android:textColor="#fff"
-        android:textSize="16sp"/>
-
-
-
-
-
-    <ProgressBar
-        android:id="@+id/switch_city_ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible"/>
 
 
 
@@ -41,17 +20,61 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:textColor="#fff"
-        android:textSize="60sp"/>
+        android:textSize="60sp"
+        android:text="24"
+        android:layout_marginRight="10dp"/>
 
-    <TextView
-        android:id="@+id/weather_info_text"
-        android:layout_width="wrap_content"
+    <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:layout_width="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true">
+
+            <Button
+                android:layout_height="20sp"
+                android:layout_width="20sp"
+                android:background="@drawable/wind_direction"
+                android:layout_marginRight="5sp"
+                android:layout_gravity="center_vertical"/>
+
+
+            <TextView
+                android:id="@+id/now_windForce_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textColor="#fff"
+                android:textSize="20sp"
+
+                android:layout_marginRight="60sp"/>
+
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/weather_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="#fff"
+            android:textSize="20sp"
+
+            android:layout_alignParentRight="true"/>
+
+
+        </RelativeLayout>
+
+
 
 
 </LinearLayout>
+
+
 
 </RelativeLayout>
