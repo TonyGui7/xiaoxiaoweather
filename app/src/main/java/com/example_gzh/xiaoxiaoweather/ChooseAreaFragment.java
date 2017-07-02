@@ -302,7 +302,7 @@ public class ChooseAreaFragment extends Fragment {
      150      * 查询全国所有的省，优先从数据库查询，如果没有查询到再到服务器上查询
      151      * */
      private void queryProvinces(){
-                 titleText.setText("中国");
+                 titleText.setText("请选择您所在的省份");
                  backButton.setVisibility(View.GONE);
                provinceList= DataSupport.findAll(Province.class);
 
@@ -459,7 +459,7 @@ public class ChooseAreaFragment extends Fragment {
                                  getActivity().runOnUiThread(new Runnable() {
                      @Override
                    public void run() {
-                                                 Toast.makeText(getActivity(), "GET_RESULT", Toast.LENGTH_SHORT).show();
+                                                // Toast.makeText(getActivity(), "GET_RESULT", Toast.LENGTH_SHORT).show();
                                                closeProgressDialog();
                                                if ("province".equals(type)) {
                                                       queryProvinces();

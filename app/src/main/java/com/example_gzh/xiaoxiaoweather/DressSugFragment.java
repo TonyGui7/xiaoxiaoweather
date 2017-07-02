@@ -3,7 +3,11 @@ package com.example_gzh.xiaoxiaoweather;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +37,12 @@ public class DressSugFragment extends Fragment {
 
 
 
+    private Toolbar toolbar;
+
+
+
+
+
     public DressSugFragment() {
         // Required empty public constructor
     }
@@ -45,6 +55,8 @@ public class DressSugFragment extends Fragment {
 
 
         activity=(LifeSuggestionActivity) getActivity();
+
+
     }
 
     @Override
@@ -52,7 +64,18 @@ public class DressSugFragment extends Fragment {
                              Bundle savedInstanceState) {
       View v=inflater.inflate(R.layout.fragment_dress_sug,container,false);
 
+/*/
 
+toolbar=(Toolbar) v.findViewById(R.id.dress_toolbar);
+       toolbar.setTitle("穿衣指数");
+
+        activity.setSupportActionBar(toolbar);
+        ActionBar actionBar=activity.getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+/*/
         briefTextView=(TextView) v.findViewById(R.id.LifeSugActi_dressBriefTextView);
          String brief=activity.getBrief();
         if (brief!=null){
@@ -83,7 +106,7 @@ public class DressSugFragment extends Fragment {
         webView=(WebView) v.findViewById(R.id.dressWebview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("https://www.taobao.com/");
 
 
         return v;

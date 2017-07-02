@@ -345,15 +345,15 @@ public class SettingFragment extends Fragment {
               imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
 
 
+          }else {
+
+
+              //只下雨不打雷
+              String suffix = "300_313";
+              String weatherBackgroundImageName = prefix + suffix;
+              imageId = getResources().getIdentifier(weatherBackgroundImageName, "drawable", "com.example_gzh.xiaoxiaoweather");
+
           }
-
-
-          //只下雨不打雷
-          String suffix="300_313";
-          String weatherBackgroundImageName=prefix+suffix;
-          imageId=getResources().getIdentifier(weatherBackgroundImageName,"drawable","com.example_gzh.xiaoxiaoweather");
-
-
       }
       else if (CurrentinfoCode.compareTo("400")>=0
               &&CurrentinfoCode.compareTo("407")<=0){//下雪天气
@@ -493,7 +493,7 @@ public class SettingFragment extends Fragment {
             if (HttpUtil.isNetworkConnected(getActivity())) {
                 String weatherId = (String) data.getSerializableExtra(QueryCityFragment.EXTRA_SEARCH_RESULT_CITY_ID);
                 WeatherActivity activity = (WeatherActivity) getActivity();
-                Toast.makeText(activity, "北京的ID:"+weatherId, Toast.LENGTH_LONG).show();
+             //   Toast.makeText(activity, "北京的ID:"+weatherId, Toast.LENGTH_LONG).show();
 
                 WeatherActivity.drawerLayout.closeDrawers();
                 activity.swipeRefresh.setRefreshing(true);

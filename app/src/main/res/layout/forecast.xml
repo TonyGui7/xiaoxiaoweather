@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
     android:layout_margin="15dp"
-    android:background="@color/forecastBackground"
+    android:background="#D0FFFFFF"
     >
 
 
@@ -14,7 +14,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:text="未来一周"
-        android:textColor="@color/forecastTextColor"
+        android:textColor="@color/textColorDefault"
         android:textSize="20sp"/>
 
     <LinearLayout

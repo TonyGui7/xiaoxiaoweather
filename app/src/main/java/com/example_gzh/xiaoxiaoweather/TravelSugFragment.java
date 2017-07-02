@@ -76,7 +76,7 @@ public class TravelSugFragment extends Fragment {
         webView=(WebView) v.findViewById(R.id.travelWebview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://www.lonelyplanet.com/");
 
 
 

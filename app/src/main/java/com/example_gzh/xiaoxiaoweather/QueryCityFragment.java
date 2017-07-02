@@ -64,11 +64,51 @@ public class QueryCityFragment extends Fragment {
 
     public static TextView titleText;
 
+    private Button backSettingFragmentButton;
 
     private TextView userInputHintTextView;
 
 
     private CharSequence currentInputText;//用户当前输入的字符串
+
+
+
+
+    /*******推荐城市列表*****************/
+
+    private LinearLayout recommendCityLayout;
+
+    private TextView chongqinTextView;
+
+    private TextView beijingTextView;
+
+    private TextView wuhanTextView;
+
+    private TextView shanghaiTextView;
+
+    private TextView guangzhouTextView;
+
+    private TextView shenzhenTextView;
+
+    private TextView hangzhouTextView;
+
+    private TextView nanjingTextView;
+
+    private TextView xianggangTextView;
+
+    private TextView chengduTextView;
+
+    private TextView changshaTextView;
+
+    private TextView guilinTextView;
+
+
+    private TextView recommendCityTextView;
+
+    /**********************/
+
+
+
 
     public QueryCityFragment() {
         // Required empty public constructor
@@ -91,6 +131,48 @@ public class QueryCityFragment extends Fragment {
 
 
 
+        /*初始化推荐城市组件*****/
+        recommendCityLayout=(LinearLayout) v.findViewById(R.id.recommend_city_layout);
+
+        recommendCityTextView=(TextView)v.findViewById(R.id.recommendCity_TextView);
+
+        recommendCityLayout.setVisibility(View.VISIBLE);
+        recommendCityTextView.setVisibility(View.VISIBLE);
+
+        chongqinTextView=(TextView)v.findViewById(R.id.chongqin_textView);
+
+        beijingTextView=(TextView)v.findViewById(R.id.beijing_textView);
+
+        wuhanTextView=(TextView)v.findViewById(R.id.wuhan_textView);
+
+        shanghaiTextView=(TextView)v.findViewById(R.id.shanghai_textView);
+
+        guangzhouTextView=(TextView)v.findViewById(R.id.guangzhou_textView);
+
+        shenzhenTextView=(TextView)v.findViewById(R.id.shenzhen_textView);
+
+        hangzhouTextView=(TextView)v.findViewById(R.id.hangzhou_textView);
+
+        nanjingTextView=(TextView)v.findViewById(R.id.nanjing_textView);
+
+        xianggangTextView=(TextView)v.findViewById(R.id.xianggang_textView);
+
+        chengduTextView=(TextView)v.findViewById(R.id.chengdu_textView);
+
+        changshaTextView=(TextView)v.findViewById(R.id.changsha_textView);
+
+        guilinTextView=(TextView)v.findViewById(R.id.guilin_textView);
+
+        /****************/
+
+        backSettingFragmentButton=(Button) v.findViewById(R.id.backSettingFragmentButton);
+        backSettingFragmentButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                getActivity().finish();
+            }
+        });
+
         titleText=(TextView) v.findViewById(R.id.query_title_TextView);
         titleText.setText("潇潇天气");
 
@@ -108,12 +190,16 @@ public class QueryCityFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent,View v,int position,
                                     long id) {
 
-                cityId=dataList.get(position).getCityId();
-                Intent i=new Intent();
-                i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID,cityId);
-                getActivity().setResult(Activity.RESULT_OK,i);
-                SettingFragment.addCityClick=true;
-            getActivity().finish();
+
+
+
+                  cityId = dataList.get(position).getCityId();
+                  Intent i = new Intent();
+                  i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                  getActivity().setResult(Activity.RESULT_OK, i);
+                  SettingFragment.addCityClick = true;
+                  getActivity().finish();
+
             }
         });
 
@@ -125,6 +211,8 @@ public class QueryCityFragment extends Fragment {
                 // TODO Auto-generated method stub
                 //userInputEditText.setText(" ");
 
+                recommendCityLayout.setVisibility(View.VISIBLE);
+                recommendCityTextView.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -143,9 +231,13 @@ public class QueryCityFragment extends Fragment {
                     tempList = Utility.matchItem(getActivity(), currentInputText);
 
                     if (tempList.size()>0) {
+                       recommendCityLayout.setVisibility(View.INVISIBLE);
+                       recommendCityTextView.setVisibility(View.INVISIBLE);
                         userInputHintTextView.setText("找到" + tempList.size() + "个结果");
                     }
                     else {
+                        recommendCityLayout.setVisibility(View.VISIBLE);
+                        recommendCityTextView.setVisibility(View.VISIBLE);
                         userInputHintTextView.setText("未找到市县，请输入正确的市县名称");
                     }
 
@@ -162,6 +254,11 @@ public class QueryCityFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
+
+
+
+
+
 /*/
                 if (currentInputText.length() > 0) {
 
@@ -210,11 +307,15 @@ public class QueryCityFragment extends Fragment {
                 }
 
                 if (cityId!=null) {
-                    Intent i = new Intent();
-                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
-                    getActivity().setResult(Activity.RESULT_OK, i);
-                    SettingFragment.addCityClick=true;
-                    getActivity().finish();
+
+
+
+                        Intent i = new Intent();
+                        i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                        getActivity().setResult(Activity.RESULT_OK, i);
+                        SettingFragment.addCityClick = true;
+                        getActivity().finish();
+
                 }
 
             }
@@ -222,7 +323,335 @@ public class QueryCityFragment extends Fragment {
 
 
 
-        Toast.makeText(getActivity(),"北京的ID:"+Utility.matchItem(getActivity(),"北京").get(0).getCityId(),Toast.LENGTH_LONG).show();
+
+        chongqinTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "重庆");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+            }
+
+        });
+
+
+        beijingTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "北京");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+            }
+
+        });
+
+
+        wuhanTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "武汉");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+            }
+
+        });
+
+
+        shanghaiTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "上海");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+            }
+
+        });
+
+
+
+        guangzhouTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "广州");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+
+            }
+
+        });
+
+
+        shenzhenTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "深圳");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+            }
+
+        });
+
+
+
+        hangzhouTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "杭州");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+
+            }
+
+        });
+
+
+        nanjingTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "南京");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+
+            }
+
+        });
+
+
+        xianggangTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "香港");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+
+            }
+
+        });
+
+
+        chengduTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "成都");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+            }
+
+        });
+
+
+
+        changshaTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "长沙");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+
+            }
+
+        });
+
+
+        guilinTextView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try {
+                    cityItem item=Utility.readFromLocalContent(getActivity(), "桂林");
+                    cityId =item.getCityId();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if (cityId!=null) {
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra(EXTRA_SEARCH_RESULT_CITY_ID, cityId);
+                    getActivity().setResult(Activity.RESULT_OK, i);
+                    SettingFragment.addCityClick = true;
+                    getActivity().finish();
+
+                }
+
+            }
+
+        });
+
+
+     //   Toast.makeText(getActivity(),"北京的ID:"+Utility.matchItem(getActivity(),"北京").get(0).getCityId(),Toast.LENGTH_LONG).show();
 
 
         return v;

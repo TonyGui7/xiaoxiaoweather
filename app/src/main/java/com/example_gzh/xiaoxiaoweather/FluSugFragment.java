@@ -76,7 +76,7 @@ public class FluSugFragment extends Fragment {
         webView=(WebView) v.findViewById(R.id.fluWebview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://dxy.com/");
 
 
 

@@ -83,7 +83,7 @@ public class CarwashSugFragment extends Fragment {
         webView=(WebView) v.findViewById(R.id.carwashWebview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://www.guaguaxiche.com/web/");
 
 
         return v;}

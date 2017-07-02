@@ -4,12 +4,23 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@drawable/weather_background100">
+              android:background="@drawable/background_gzh3"
+              xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary">
+
+
+        <Button
+            android:id="@+id/backSettingFragmentButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"/>
 
 
         <TextView
@@ -26,6 +37,60 @@
 
     </RelativeLayout>
 
+
+    <android.support.percent.PercentFrameLayout
+
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="50dp">
+
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            app:layout_widthPercent="65%"
+            >
+            <EditText
+                android:id="@+id/userInputEditText"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="false"
+
+                android:selectAllOnFocus="true"
+                android:hint="请输入城市名称"
+               android:layout_alignParentRight="true"
+
+                android:background="@drawable/user_input_search_edittext"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            app:layout_widthPercent="35%"
+            >
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+
+                android:layout_alignParentLeft="true"
+                   android:layout_marginLeft="10dp"
+                android:padding="10dp"
+                android:text="查询"
+                android:textColor="#F0FFFF"
+                android:background="@drawable/search_button"/>
+
+
+
+        </RelativeLayout>
+
+
+        </android.support.percent.PercentFrameLayout>
+
+
     <RelativeLayout
 
         android:layout_width="match_parent"
@@ -36,46 +101,228 @@
 
 
 
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:padding="0dp"
-            android:text="查询"
-            android:textColor="#F0FFFF"
-            android:background="@drawable/search_button"/>
 
 
-        <EditText
-            android:id="@+id/userInputEditText"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="false"
 
-            android:selectAllOnFocus="true"
-            android:hint="请输入城市名称"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/user_input_search_edittext"/>
 
         <TextView
             android:id="@+id/userInputHintTextView"
             android:layout_height="20dp"
             android:layout_width="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="110dp"/>
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#fff"/>
+
+        <TextView
+             android:id="@+id/recommendCity_TextView"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="35dp"
+            android:text="推荐城市"
+            android:textSize="20dp"
+            android:textColor="#fff"/>
+
+
+
+        <LinearLayout
+            android:id="@+id/recommend_city_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="65dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                >
+
+                <TextView
+                    android:id="@+id/chongqin_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="重庆"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"/>
+
+                <TextView
+                    android:id="@+id/beijing_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+
+                    android:text="北京"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"/>
+
+
+                <TextView
+                    android:id="@+id/wuhan_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="武汉"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50dp"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+
+                <TextView
+                    android:id="@+id/shanghai_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="上海"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"/>
+
+                <TextView
+                    android:id="@+id/guangzhou_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+
+                    android:text="广州"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"/>
+
+
+                <TextView
+                    android:id="@+id/shenzhen_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="深圳"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50dp"
+                    />
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+                <TextView
+                    android:id="@+id/hangzhou_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="杭州"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"/>
+
+                <TextView
+                    android:id="@+id/nanjing_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+
+                    android:text="南京"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"/>
+
+
+                <TextView
+                    android:id="@+id/xianggang_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="香港"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50dp"
+                    />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+                <TextView
+                    android:id="@+id/chengdu_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="成都"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"/>
+
+                <TextView
+                    android:id="@+id/changsha_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+
+                    android:text="长沙"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"/>
+
+
+                <TextView
+                    android:id="@+id/guilin_textView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="桂林"
+                    android:textColor="#fff"
+                    android:textSize="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="50dp"
+                    />
+
+            </RelativeLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
 
         <ListView
             android:id="@+id/query_list_view"
 
-            android:layout_width="200dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="false"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="135dp"/>
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="45dp"/>
 
     </RelativeLayout>
 

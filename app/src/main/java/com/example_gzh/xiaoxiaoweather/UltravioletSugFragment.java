@@ -77,7 +77,7 @@ public class UltravioletSugFragment extends Fragment {
         webView=(WebView) v.findViewById(R.id.ultravioletWebview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://www.anessa.cn/");
 
 
 

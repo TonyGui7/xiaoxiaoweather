@@ -84,7 +84,7 @@ public class SportSugFragment extends Fragment {
         webView=(WebView) v.findViewById(R.id.sportWebview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://www.dongqil.com/");
 
 
 

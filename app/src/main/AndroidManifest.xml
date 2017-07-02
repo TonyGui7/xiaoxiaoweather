@@ -16,13 +16,14 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
+
         </activity>
         <activity android:name=".WeatherActivity">
+
+
+
         </activity>
 
         <service
@@ -34,6 +35,14 @@
         <activity android:name=".QueryCityActivity">
         </activity>
         <activity android:name=".LifeSuggestionActivity">
+        </activity>
+        <activity android:name=".LauncherActivity"
+                  android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
     </application>
 

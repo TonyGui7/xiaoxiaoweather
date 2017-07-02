@@ -414,7 +414,10 @@ public class WeatherActivity extends ActionBarActivity {
             updateSettingFragmentBackground();
         }else{  //天气数据没有缓存，需要到服务器获取数据
             mWeatherId=getIntent().getStringExtra("weather_id");
-           // mWeatherId= "CN101010200";
+            if(mWeatherId==null){
+                mWeatherId= "CN101010100";
+            }
+          //  mWeatherId= "CN101010100";
             weatherLayout.setVisibility(View.INVISIBLE);
             if(HttpUtil.isNetworkConnected(WeatherActivity.this)){
                 requestWeather(mWeatherId);
@@ -697,14 +700,14 @@ public class WeatherActivity extends ActionBarActivity {
                 // TODO Auto-generated method stub
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    Request request = new Request.Builder()
-                            .url("https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
-                          .build();
-
-
                   //  Request request = new Request.Builder()
-                   //         .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
-                    //        .build();   //能够获取未来一周的天气信息
+                  //          .url("https://free-api.heweather.com/v5/weather?city="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
+                   //       .build();
+
+
+                    Request request = new Request.Builder()
+                            .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=bc0418b57b2d4918819d3974ac1285d9")
+                            .build();   //能够获取未来一周的天气信息
 
                   //  Request request = new Request.Builder()
                      //       .url("http://guolin.tech/api/weather?cityid="+weatherId+"&key=9f9e65060d714f22ba47a7b8c9821ef6")
@@ -791,6 +794,7 @@ public class WeatherActivity extends ActionBarActivity {
                                         addedCitesListLab.get(WeatherActivity.this).addCityItem(item);
 
                                         addedCitesListLab.get(WeatherActivity.this).saveCityLists();
+                                        SettingFragment.adapter.notifyDataSetChanged();
                                         SettingFragment.addCityClick = false;
                                     }
 
@@ -851,13 +855,26 @@ public class WeatherActivity extends ActionBarActivity {
 
         titleCity.setText(cityName);
 
-        titleUpdateTime.setText(updateTime+"发布");
+        if (updateTime!=null) {
 
-        degreeText.setText(degree);
+            titleUpdateTime.setText(updateTime + "发布");
+        }
 
-        weatherInfoText.setText(weatherInfo);
+        if (degree!=null) {
 
-        nowWindForceTextView.setText(nowWindForce);
+            degreeText.setText(degree);
+        }
+
+
+        if (weatherInfo!=null) {
+            weatherInfoText.setText(weatherInfo);
+        }
+
+
+        if(nowWindForce!=null) {
+            nowWindForceTextView.setText(nowWindForce);
+        }
+
 
         forecastLayout.removeAllViews();
 
@@ -876,29 +893,45 @@ public class WeatherActivity extends ActionBarActivity {
             TextView minText=(TextView) v.findViewById(R.id.min_text);
 
             String infoCode=forecast.more.infoCode;
-
-            String weatherLogoName="weather_logo"+infoCode;
-           // String weatherLogoName="test";
-            int logoId=getResources().getIdentifier(weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
-
-
-
-            String sunriseTime=forecast.astronomyInfo.sunRiseTime;
-
-            String sunfallTime=forecast.astronomyInfo.sunFallTime;
-
-            String moonriseTime=forecast.astronomyInfo.moonRiseTime;
+            String weatherLogoName;
+            if (infoCode!=null) {
+                weatherLogoName = "weather_logo" + infoCode;
+                // String weatherLogoName="test";
 
 
-            String moonfallTime=forecast.astronomyInfo.moonFallTime;
+                int logoId = getResources().getIdentifier(weatherLogoName, "drawable", "com.example_gzh.xiaoxiaoweather");
 
 
+                String sunriseTime = forecast.astronomyInfo.sunRiseTime;
 
-            infoLogoButton.setBackgroundResource(logoId);
-            dateText.setText(forecast.date);
-            infoText.setText(forecast.more.info);
-            maxText.setText(forecast.temperature.max);
-            minText.setText(forecast.temperature.min);
+                String sunfallTime = forecast.astronomyInfo.sunFallTime;
+
+                String moonriseTime = forecast.astronomyInfo.moonRiseTime;
+
+
+                String moonfallTime = forecast.astronomyInfo.moonFallTime;
+
+
+                infoLogoButton.setBackgroundResource(logoId);
+
+                if (forecast.date!=null) {
+                    dateText.setText(forecast.date);
+
+                }
+
+                if (forecast.more.info!=null) {
+                    infoText.setText(forecast.more.info);
+                }
+
+                if (forecast.temperature.max!=null) {
+                    maxText.setText(forecast.temperature.max);
+                }
+
+                if (forecast.temperature.min!=null) {
+                    minText.setText(forecast.temperature.min);
+                }
+
+            }
             forecastLayout.addView(v);
 
         }
@@ -906,96 +939,123 @@ public class WeatherActivity extends ActionBarActivity {
 
 
         if (weather.aqi!=null){
-            aqiText.setText(weather.aqi.city.aqi);
-            pm25Text.setText(weather.aqi.city.pm25);
+            String aqi=weather.aqi.city.aqi;
+            String pm25=weather.aqi.city.pm25;
 
-        }
-
-
-
-        String today_aqi_info=weather.aqi.city.aqi;
-        int aqi_backgroundId=0;
-        if (today_aqi_info!=null) {
-        int aqi_info=Integer.parseInt(today_aqi_info);
+                aqiText.setText(aqi);
 
 
 
-            if (aqi_info < 50) {//空气质量优秀
-                today_aqi_info = today_aqi_info + "优";
-                String aqi_background="aqi_excellent";
-                // String weatherLogoName="test";
-                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
 
-            }
-
-            else if (aqi_info>= 51 &&
-                    aqi_info<= 100) {//空气质量良好
-
-                today_aqi_info = today_aqi_info + "良";
-
-                String aqi_background="aqi_good";
-                // String weatherLogoName="test";
-                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
-
-            }
+                String today_aqi_info=weather.aqi.city.aqi;
+                int aqi_backgroundId=0;
+                if (today_aqi_info!=null) {
+                    int aqi_info=Integer.parseInt(today_aqi_info);
 
 
-            else if (aqi_info>= 101 &&
-                    aqi_info<= 200) {//轻度污染
-                today_aqi_info = today_aqi_info + "轻度污染";
 
-                String aqi_background="aqi_light_pollute";
-                // String weatherLogoName="test";
-                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+                    if (aqi_info < 50) {//空气质量优秀
+                        today_aqi_info = today_aqi_info + "优";
+                        String aqi_background="aqi_excellent";
+                        // String weatherLogoName="test";
+                        aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
 
-            }
+                    }
 
-            else if (aqi_info>= 201 &&
-                    aqi_info<= 300) {//中度污染
-                today_aqi_info = today_aqi_info + "中度污染";
+                    else if (aqi_info>= 51 &&
+                            aqi_info<= 100) {//空气质量良好
 
-                String aqi_background="aqi_middle_pollute";
-                // String weatherLogoName="test";
-                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+                        today_aqi_info = today_aqi_info + "良";
 
-            }
+                        String aqi_background="aqi_good";
+                        // String weatherLogoName="test";
+                        aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
 
-            else if (aqi_info>= 301) {//重度污染
-                today_aqi_info = today_aqi_info + "重度污染";
+                    }
 
-                String aqi_background="aqi_severe_pollute";
-                // String weatherLogoName="test";
-                aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
 
-            }
-        }
+                    else if (aqi_info>= 101 &&
+                            aqi_info<= 200) {//轻度污染
+                        today_aqi_info = today_aqi_info + "轻度污染";
+
+                        String aqi_background="aqi_light_pollute";
+                        // String weatherLogoName="test";
+                        aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+                    }
+
+                    else if (aqi_info>= 201 &&
+                            aqi_info<= 300) {//中度污染
+                        today_aqi_info = today_aqi_info + "中度污染";
+
+                        String aqi_background="aqi_middle_pollute";
+                        // String weatherLogoName="test";
+                        aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+                    }
+
+                    else if (aqi_info>= 301) {//重度污染
+                        today_aqi_info = today_aqi_info + "重度污染";
+
+                        String aqi_background="aqi_severe_pollute";
+                        // String weatherLogoName="test";
+                        aqi_backgroundId=getResources().getIdentifier(aqi_background,"drawable","com.example_gzh.xiaoxiaoweather");
+
+                    }
+                    today_aqi_Button.setText(today_aqi_info);
+                }
           /*今天的天气信息**/
 
-        today_aqi_Button.setText(today_aqi_info);
-        if (aqi_backgroundId!=0) {
-            today_aqi_Button.setBackgroundResource(aqi_backgroundId);
+
+                if (aqi_backgroundId!=0) {
+                    today_aqi_Button.setBackgroundResource(aqi_backgroundId);
+                }
+                else {
+                    today_aqi_Button.setVisibility(View.INVISIBLE);
+                }
+
+            if (pm25!=null) {
+                pm25Text.setText(pm25);
+            }
+
         }
+        else{
+            aqiText.setTextSize(10);
+            aqiText.setText("Sorry,未获取数据");
+            pm25Text.setTextSize(10);
+            pm25Text.setText("Sorry,未获取数据");
+            today_aqi_Button.setVisibility(View.INVISIBLE);
+        }
+
+
+
+
      //   today_aqi_Button.setBackground(Color.);
 
 
-        String todayinfoCode=weather.forecastList.get(0).more.infoCode;
 
-        String today_weatherLogoName="weather_logo"+todayinfoCode;
-        // String weatherLogoName="test";
-        int today_logoId=getResources().getIdentifier(today_weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
+        if (weather.forecastList.get(0)!=null) {
+            String todayinfoCode = weather.forecastList.get(0).more.infoCode;
+
+            if (todayinfoCode!=null) {
+                String today_weatherLogoName = "weather_logo" + todayinfoCode;
+                // String weatherLogoName="test";
+                int today_logoId = getResources().getIdentifier(today_weatherLogoName, "drawable", "com.example_gzh.xiaoxiaoweather");
 
 
-        today_weatherInfo_Button.setBackgroundResource(today_logoId);
+                today_weatherInfo_Button.setBackgroundResource(today_logoId);
 
-        String today_tempRange=weather.forecastList.get(0).temperature.min+
-                "~"+weather.forecastList.get(0).temperature.max+"℃";
+                String today_tempRange = weather.forecastList.get(0).temperature.min +
+                        "~" + weather.forecastList.get(0).temperature.max + "℃";
 
-        today_TempRange_TextView.setText(today_tempRange);
+                today_TempRange_TextView.setText(today_tempRange);
 
-        String todayWeatherInfo=weather.forecastList.get(0).more.info;
+                String todayWeatherInfo = weather.forecastList.get(0).more.info;
 
-        today_weatherInfo_TextView.setText(todayWeatherInfo);
+                today_weatherInfo_TextView.setText(todayWeatherInfo);
 
+            }
+        }
 
 
     /*明天的天气信息**/
@@ -1004,24 +1064,24 @@ public class WeatherActivity extends ActionBarActivity {
 
         String tomorowinfoCode=weather.forecastList.get(1).more.infoCode;
 
-        String tomorow_weatherLogoName="weather_logo"+tomorowinfoCode;
-        // String weatherLogoName="test";
-        int tomorow_logoId=getResources().getIdentifier(tomorow_weatherLogoName,"drawable","com.example_gzh.xiaoxiaoweather");
+        if (tomorowinfoCode!=null) {
+            String tomorow_weatherLogoName = "weather_logo" + tomorowinfoCode;
+            // String weatherLogoName="test";
+            int tomorow_logoId = getResources().getIdentifier(tomorow_weatherLogoName, "drawable", "com.example_gzh.xiaoxiaoweather");
 
 
+            tomorow_weatherInfo_Button.setBackgroundResource(tomorow_logoId);
 
-        tomorow_weatherInfo_Button.setBackgroundResource(tomorow_logoId);
-
-        String tomorow_tempRange=weather.forecastList.get(1).temperature.min+
-                "~"+weather.forecastList.get(1).temperature.max+"℃";
-
-
-        tomorow_TempRange_TextView.setText(tomorow_tempRange);
-
-        String tomorow_WeatherInfo=weather.forecastList.get(1).more.info;
-        tomorow_weatherInfo_TextView.setText(tomorow_WeatherInfo);
+            String tomorow_tempRange = weather.forecastList.get(1).temperature.min +
+                    "~" + weather.forecastList.get(1).temperature.max + "℃";
 
 
+            tomorow_TempRange_TextView.setText(tomorow_tempRange);
+
+            String tomorow_WeatherInfo = weather.forecastList.get(1).more.info;
+            tomorow_weatherInfo_TextView.setText(tomorow_WeatherInfo);
+
+        }
 
         /*简要生活建议**/
         String dressBrief=weather.suggestion.dress.brief;
@@ -1064,94 +1124,113 @@ public class WeatherActivity extends ActionBarActivity {
 
     /*感冒指数**/
 
+    if (fluBrief!=null) {
         fluBriefTextView.setText(fluBrief);
-
+    }
 
 
     /*运动指数**/
-
-        sportBriefTextView.setText(sportBrief);
-
+         if (sportBrief!=null) {
+             sportBriefTextView.setText(sportBrief);
+         }
 
 
     /*洗车指数**/
 
+    if (carWashBrief!=null) {
         carWashBriefTextView.setText(carWashBrief);
-
+    }
 
 
     /*旅游指数**/
-
-        travelBriefTextView.setText(travelBrief);
-
+if (travelBrief!=null) {
+    travelBriefTextView.setText(travelBrief);
+}
 
 
 
     /*紫外线指数**/
-
-       ultravioletBriefTextView.setText(ultravioletBrief);
-
+if (ultravioletBrief!=null) {
+    ultravioletBriefTextView.setText(ultravioletBrief);
+}
 
 
     /*舒适度指数**/
-
-        comfortBriefTextView.setText(comfortBrief);
-
-
-
-        String sunriseTime=weather.forecastList.get(0).astronomyInfo.sunRiseTime;
-
-        String sunfallTime=weather.forecastList.get(0).astronomyInfo.sunFallTime;
-
-        String moonriseTime=weather.forecastList.get(0).astronomyInfo.moonRiseTime;
-
-        String moonfallTime=weather.forecastList.get(0).astronomyInfo.moonFallTime;
+if (comfortBrief!=null) {
+    comfortBriefTextView.setText(comfortBrief);
+}
 
 
-        String feelTemp=weather.now.feelTemperature+"℃";
+if (weather.forecastList.get(0).astronomyInfo!=null) {
 
-        String humidity=weather.now.humidity+"%";
+    String sunriseTime = weather.forecastList.get(0).astronomyInfo.sunRiseTime;
 
-        String pressure=weather.now.pressure+"Pa";
+    String sunfallTime = weather.forecastList.get(0).astronomyInfo.sunFallTime;
 
-        String visibility=weather.now.visibility+"km";
+    String moonriseTime = weather.forecastList.get(0).astronomyInfo.moonRiseTime;
 
-        String rainfall=weather.now.rainfall+"mm";
+    String moonfallTime = weather.forecastList.get(0).astronomyInfo.moonFallTime;
 
 
+    String feelTemp = weather.now.feelTemperature + "℃";
 
+    String humidity = weather.now.humidity + "%";
+
+    String pressure = weather.now.pressure + "Pa";
+
+    String visibility = weather.now.visibility + "km";
+
+    String rainfall = weather.now.rainfall + "mm";
+
+
+    if (sunriseTime!=null) {
         sunriseTimeTextView.setText(sunriseTime);
+    }
 
+    if (sunfallTime!=null) {
         sunfallTimeTextView.setText(sunfallTime);
+    }
 
-        feelTempTextView.setText(feelTemp);
+if (feelTemp!=null) {
+    feelTempTextView.setText(feelTemp);
+}
 
-        humidityTextView.setText(humidity);
+if (humidity!=null) {
+    humidityTextView.setText(humidity);
+}
 
-        pressureTextView.setText(pressure);
-
-        visibilityTextView.setText(visibility);
-
-        rainfallTextView.setText(rainfall);
-
-
-
-
-
-        String windDirection=weather.now.wind.windDirection;
-
-        String windForce=weather.now.wind.windStrength+"级";
-
-        String windSpeed=weather.now.wind.windSpeed+"km/h";
+     if (pressure!=null) {
+         pressureTextView.setText(pressure);
+     }
 
 
-        windDirectionTextView.setText(windDirection);
+     if (visibility!=null) {
+         visibilityTextView.setText(visibility);
+     }
 
-        windForceTextView.setText(windForce);
+     if (rainfall!=null) {
+         rainfallTextView.setText(rainfall);
+     }
 
-        windSpeedTextView.setText(windSpeed);
+}
 
 
+if (weather.now.wind!=null) {
+    String windDirection = weather.now.wind.windDirection;
+
+    String windForce = weather.now.wind.windStrength + "级";
+
+    String windSpeed = weather.now.wind.windSpeed + "km/h";
+
+if (windDirection!=null&&windForce!=null&&windSpeed!=null) {
+    windDirectionTextView.setText(windDirection);
+
+    windForceTextView.setText(windForce);
+
+    windSpeedTextView.setText(windSpeed);
+}
+
+}
 
 
         /*/
